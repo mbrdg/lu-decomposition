@@ -12,18 +12,18 @@ template<typename T>
 using matrix_t = T[];
 
 
-template<typename T, std::size_t N> 
-void lu(matrix_t<T> A)
+template<typename T> 
+void lu(matrix_t<T> A, const std::size_t N)
 {
     std::size_t k = 0;
     while (A[k * N + k] != 0 && k <= N) {
-        
-        for (std::size_t i = k + 1; i < N; ++i) {
-            A[i * N + k] /= A[k * N + k];
-        }
 
         for (std::size_t i = k + 1; i < N; ++i) {
-            A[i * N + i] -= A[i * N + k] * A[k * N + i];
+            A[i * N + k] /= A[k * N + k];
+
+            for (std::size_t j = k + 1; j < N; ++j) {
+                A[i * N + j] -= A[i * N + k] * A[k * N + j];
+            }
         }
 
         ++k;
@@ -31,26 +31,32 @@ void lu(matrix_t<T> A)
 }
 
 
-int
-main(void)
+int main(void)
 {
-
-    constexpr std::size_t matrix_size = 2;
+    constexpr std::size_t matrix_size = 4;
     auto matrix = std::make_unique<matrix_t<double>>(matrix_size * matrix_size);
 
-    matrix[0] = 4.0;
-    matrix[1] = 3.0;
-    matrix[2] = 6.0;
-    matrix[3] = 3.0;
-
-    lu<double, matrix_size>(matrix.get());
-
-    for (std::size_t i = 0; i < matrix_size; ++i) {
-        for (std::size_t j = 0; j < matrix_size; ++j) {
-            std::cout << matrix[i * matrix_size + j] << '\t';
+    constexpr auto show = [matrix_size]<typename T>(const matrix_t<T> M) {
+        for (std::size_t i = 0; i < matrix_size; ++i) {
+            for (std::size_t j = 0; j < matrix_size; ++j) {
+                std::cout << M[i * matrix_size + j] << '\t';
+            }
+            std::cout << '\n';
         }
         std::cout << '\n';
-    }
+    };
+
+    constexpr auto fill = [matrix_size]<typename T>(matrix_t<T> M) {
+        for (std::size_t i = 0; i < matrix_size * matrix_size; ++i) {
+            M[i] = 1.0 + static_cast<T>(i);
+        }
+    };
+
+    fill(matrix.get());
+
+    show(matrix.get());
+    lu(matrix.get(), matrix_size);
+    show(matrix.get());
 
     return 0;
 }
