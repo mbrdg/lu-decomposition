@@ -15,8 +15,7 @@ using matrix_t = T[];
 template<typename T> 
 void lu(matrix_t<T> A, const std::size_t N)
 {
-    std::size_t k = 0;
-    while (A[k * N + k] != 0 && k <= N) {
+    for (std::size_t k = 0; A[k * N + k] != 0 && k <= N; ++k) {
 
         for (std::size_t i = k + 1; i < N; ++i) {
             A[i * N + k] /= A[k * N + k];
@@ -25,8 +24,6 @@ void lu(matrix_t<T> A, const std::size_t N)
                 A[i * N + j] -= A[i * N + k] * A[k * N + j];
             }
         }
-
-        ++k;
     }
 }
 
