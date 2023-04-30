@@ -4,7 +4,8 @@
  *  Authors:
  *      Miguel Rodrigues <up201906042@edu.fe.up.pt>
  *      Sérgio Estêvão <up201905680@edu.fe.up.pt>
- */ 
+ */
+#include <chrono>
 #include <iostream>
 #include <memory>
 #include <random>
@@ -57,8 +58,15 @@ int main(void)
 
     auto matrix = std::make_unique<matrix_t<double>>(matrix_size * matrix_size);
     make_diagonal_dominant(matrix.get(), matrix_size);
+
+    const auto start = std::chrono::steady_clock::now();
     lu(matrix.get(), matrix_size);
+    const auto end = std::chrono::steady_clock::now();
+
     show(matrix.get(), matrix_size);
+
+    const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+    std::clog << "`lu` took" << ' ' << duration << '\n';
 
     return 0;
 }
