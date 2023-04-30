@@ -7,6 +7,7 @@
  */
 #include <iostream>
 #include <memory>
+#include <random>
 #include <utility>
 
 template <typename T>
@@ -103,26 +104,31 @@ void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
 int
 main(void) 
 {
-    auto matrix = std::make_unique<matrix_t<double>>(matrix_size * matrix_size);
+    const auto make_diagonal_dominant = []<typename T>(matrix_t<T> A, const matrix_size_t N) {
+        std::random_device dev;
+        std::mt19937 rng(dev());
+        std::uniform_real_distribution dist(0.0, 1.0);
 
-    matrix[0] = 2;
-    matrix[1] = 1;
-    matrix[2] = -4;
-    matrix[3] = 2;
-    matrix[4] = 1;
-    matrix[5] = -2;
-    matrix[6] = 6;
-    matrix[7] = 3;
-    matrix[8] = -11;
-
-    lu(matrix.get(), matrix_size, block_size);
-
-    for (matrix_size_t i = 0; i < matrix_size; ++i) {
-        for (matrix_size_t j = 0; j < matrix_size; ++j) {
-            std::cout << std::fixed << matrix[i * matrix_size + j] << '\t';
+        for (matrix_size_t i = 0; i < N; ++i) {
+            for (matrix_size_t j = 0; j < N; ++j)
+                A[i * N + j] = 2.0 * dist(rng) - 1.0;
+            A[i * N + i] = dist(rng) + static_cast<double>(N);
         }
-        std::cout << '\n';
-    }
+    };
+
+    const auto show = []<typename T>(matrix_t<T> A, const matrix_size_t N, std::ostream& out = std::cout) {
+        for (matrix_size_t i = 0; i < N; ++i) {
+            for (matrix_size_t j = 0; j < N; ++j) {
+                out << std::fixed << A[i * N + j] << '\t';
+            }
+            out << '\n';
+        }
+    };
+
+    auto matrix = std::make_unique<matrix_t<double>>(matrix_size * matrix_size);
+    make_diagonal_dominant(matrix.get(), matrix_size);
+    lu(matrix.get(), matrix_size, block_size);
+    show(matrix.get(), matrix_size);
 
     return 0;
 }
