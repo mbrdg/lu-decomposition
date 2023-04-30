@@ -105,8 +105,7 @@ int
 main(void) 
 {
     const auto make_diagonal_dominant = []<typename T>(matrix_t<T> A, const matrix_size_t N) {
-        std::random_device dev;
-        std::mt19937 rng(dev());
+        std::mt19937 rng(100);
         std::uniform_real_distribution dist(0.0, 1.0);
 
         for (matrix_size_t i = 0; i < N; ++i) {

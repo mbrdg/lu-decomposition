@@ -14,7 +14,7 @@ template<typename T>
 using matrix_t = T[];
 using matrix_size_t = std::size_t;
 
-static constexpr matrix_size_t matrix_size = 3;
+static constexpr matrix_size_t matrix_size = 8;
 
 
 template<typename T> 
@@ -36,8 +36,7 @@ void lu(matrix_t<T> A, const matrix_size_t N)
 int main(void)
 {   
     const auto make_diagonal_dominant = []<typename T>(matrix_t<T> A, const matrix_size_t N) {
-        std::random_device dev;
-        std::mt19937 rng(dev());
+        std::mt19937 rng(100);
         std::uniform_real_distribution dist(0.0, 1.0);
 
         for (matrix_size_t i = 0; i < N; ++i) {
