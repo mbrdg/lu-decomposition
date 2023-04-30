@@ -16,9 +16,8 @@ using matrix_t = T[];
 using matrix_size_t = std::size_t;
 using block_size_t = std::size_t;
 
-static constexpr matrix_size_t matrix_size = 3;
-static constexpr block_size_t block_size = 1;
-
+static constexpr matrix_size_t matrix_size = 8;
+static constexpr block_size_t block_size = 2;
 
 template <typename T>
 void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
@@ -38,12 +37,12 @@ void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
         }
     };
 
-    const auto utrms = [&A, &N, &B](const matrix_size_t i, const matrix_size_t j) {
+    const auto utrsm = [&A, &N, &B](const matrix_size_t i, const matrix_size_t j) {
         const auto [start_row, end_row] = std::make_pair(i * B, i * B + B);
         const auto [start_col, end_col] = std::make_pair(j * B, j * B + B);
 
         for (auto ii = start_row; ii < end_row - 1; ++ii) {
-            for (auto jj = ii + 1; j < B; ++jj) {
+            for (auto jj = ii + 1; jj < B; ++jj) {
                 for (auto kk = start_col; kk < end_col; ++kk) {
                     A[jj * N + kk] -= A[jj * N + ii] * A[ii * N + kk];
                 }
@@ -51,11 +50,11 @@ void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
         }
     };
 
-    const auto ltrms = [&A, &N, &B](const matrix_size_t i, const matrix_size_t j) {
+    const auto ltrsm = [&A, &N, &B](const matrix_size_t i, const matrix_size_t j) {
         const auto [start_row, end_row] = std::make_pair(i * B, i * B + B);
         const auto [start_col, end_col] = std::make_pair(j * B, j * B + B);
 
-        for (auto ii = start_row; A[ii * N + ii] != 0 && ii < end_row; ++ii) {
+        for (auto ii = start_row; A[ii * N + ii] != 0.0 && ii < end_row; ++ii) {
             
             for (auto jj = start_col; jj < end_col; ++jj) {
                 A[jj * N + ii] /= A[ii * N + ii];
@@ -87,14 +86,14 @@ void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
         baselu(i);  // LU decomposition on the diagonal block
 
         for (matrix_size_t j = i + 1; j < blocks; ++j) {
-            utrms(i, j);    // Upper Triangular matrix solver
+            utrsm(i, j);    // upper triangular matrix solver
         }
 
         for (matrix_size_t j = i + 1; j < blocks; ++j) {
-            ltrms(i, j);    // Lower Triangular matrix solver
+            ltrsm(i, j);    // lower triangular matrix solver
 
             for (matrix_size_t k = i + 1; k < blocks; ++k) {
-                gemm(i, j, k);  // General Matrix Multiplication
+                gemm(i, j, k);  // general matrix multiplication
             }
         }
     }
