@@ -6,7 +6,7 @@ CXXFLAGS=-std=c++20 -O3 -Wall -Wextra -Werror -pedantic -Wconversion -Wshadow
 
 .PHONY: clean all
 
-all: lu lublk
+all: lu lublk luomp
 
 %: src/%.cpp
 	@mkdir -p bin/
