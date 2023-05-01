@@ -16,8 +16,8 @@ using matrix_t = T[];
 using matrix_size_t = std::size_t;
 using block_size_t = std::size_t;
 
-static constexpr matrix_size_t matrix_size = 8;
-static constexpr block_size_t block_size = 2;
+static constexpr matrix_size_t matrix_size = 8192;
+static constexpr block_size_t block_size = 512;
 
 template <typename T>
 void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
@@ -115,14 +115,14 @@ main(void)
         }
     };
 
-    const auto show = []<typename T>(matrix_t<T> A, const matrix_size_t N, std::ostream& out = std::cout) {
-        for (matrix_size_t i = 0; i < N; ++i) {
-            for (matrix_size_t j = 0; j < N; ++j) {
-                out << std::fixed << A[i * N + j] << '\t';
-            }
-            out << '\n';
-        }
-    };
+    // const auto show = []<typename T>(matrix_t<T> A, const matrix_size_t N, std::ostream& out = std::cout) {
+    //     for (matrix_size_t i = 0; i < N; ++i) {
+    //         for (matrix_size_t j = 0; j < N; ++j) {
+    //             out << std::fixed << A[i * N + j] << '\t';
+    //         }
+    //         out << '\n';
+    //     }
+    // };
 
     auto matrix = std::make_unique<matrix_t<double>>(matrix_size * matrix_size);
     make_diagonal_dominant(matrix.get(), matrix_size);
@@ -131,9 +131,9 @@ main(void)
     lu(matrix.get(), matrix_size, block_size);
     const auto end = std::chrono::steady_clock::now();
 
-    show(matrix.get(), matrix_size);
+    // show(matrix.get(), matrix_size);
 
-    const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+    const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::clog << "`lu` took" << ' ' << duration << '\n';
 
     return 0;
