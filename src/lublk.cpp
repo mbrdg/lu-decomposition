@@ -17,7 +17,7 @@ using matrix_size_t = std::size_t;
 using block_size_t = std::size_t;
 
 static constexpr matrix_size_t matrix_size = 8192;
-static constexpr block_size_t block_size = 512;
+static constexpr block_size_t block_size = 128;
 
 template <typename T>
 void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
@@ -134,7 +134,9 @@ main(void)
     // show(matrix.get(), matrix_size);
 
     const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    std::clog << "`lu` took" << ' ' << duration << '\n';
+    std::clog << "`lu` took" << ' ' << duration << '\n'
+              << "matrix size:" << ' ' << matrix_size << '\n'
+              << "block size:" << ' ' << block_size << '\n';
 
     return 0;
 }
