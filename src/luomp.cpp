@@ -19,8 +19,8 @@ using matrix_t = T[];
 using matrix_size_t = std::size_t;
 using block_size_t = std::size_t;
 
-static constexpr matrix_size_t matrix_size = 8;
-static constexpr block_size_t block_size = 2;
+static constexpr matrix_size_t matrix_size = 8192;
+static constexpr block_size_t block_size = 512;
 
 
 template <typename T>
@@ -116,14 +116,14 @@ void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
     for (int i = 0; i < blocks; ++i) { 
         #pragma omp task \
             default(none) shared(A, N, B) firstprivate(i) \
-            depend(inout: A[i * B * N + i * B]) \
+            depend(inout: A[(i * N + i) * B]) \
             priority(max_task_priority)
         baselu(A, N, B, i);  // LU decomposition on the diagonal block
 
         for (int j = i + 1; j < blocks; ++j) {
             #pragma omp task \
                 default(none) shared(A, N, B) firstprivate(i, j) \
-                depend(in: A[i * B * N + i * B]) depend(inout: A[i * B * N + j * B]) \
+                depend(in: A[(i * N + i) * B]) depend(inout: A[(i * N + j) * B]) \
                 priority(std::max(0, max_task_priority - j + i))
             utrsm(A, N, B, i, j);    // upper triangular matrix solver
         }
@@ -131,15 +131,15 @@ void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
         for (int j = i + 1; j < blocks; ++j) {
             #pragma omp task \
                 default(none) shared(A, N, B) firstprivate(i, j) \
-                depend(in: A[i * B * N + i * B]) depend(inout: A[j * B * N + i * B]) \
+                depend(in: A[(i * N + i) * B]) depend(inout: A[(j * N + i) * B]) \
                 priority(std::max(0, max_task_priority - j + i))
             ltrsm(A, N, B, i, j);    // lower triangular matrix solver
 
             for (int k = i + 1; k < blocks; ++k) {
                 #pragma omp task \
                     default(none) shared(A, N, B) firstprivate(i, j, k) \
-                    depend(in: A[i * B * N + k * B], A[j * B * N + i * B]) \
-                    depend(inout: A[j * B * N + k * B]) \
+                    depend(in: A[(i * N + k) * B], A[(j * N + i) * B]) \
+                    depend(inout: A[(j * N + k) * B]) \
                     priority(std::max({0, max_task_priority - j + i, max_task_priority - k + i}))
                 gemm(A, N, B, i, j, k);  // general matrix multiplication
             }
@@ -162,14 +162,14 @@ main(void)
         }
     };
 
-    constexpr auto show = []<typename T>(matrix_t<T> A, const matrix_size_t N, std::ostream& out = std::cout) {
-        for (matrix_size_t i = 0; i < N; ++i) {
-            for (matrix_size_t j = 0; j < N; ++j) {
-                out << std::fixed << A[i * N + j] << '\t';
-            }
-            out << '\n';
-        }
-    };
+    // constexpr auto show = []<typename T>(matrix_t<T> A, const matrix_size_t N, std::ostream& out = std::cout) {
+    //     for (matrix_size_t i = 0; i < N; ++i) {
+    //         for (matrix_size_t j = 0; j < N; ++j) {
+    //             out << std::fixed << A[i * N + j] << '\t';
+    //         }
+    //         out << '\n';
+    //     }
+    // };
 
     auto matrix = std::make_unique<matrix_t<double>>(matrix_size * matrix_size);
     make_diagonal_dominant(matrix.get(), matrix_size);
@@ -178,9 +178,9 @@ main(void)
     lu(matrix.get(), matrix_size, block_size);
     const auto end = std::chrono::steady_clock::now();
 
-    show(matrix.get(), matrix_size);
+    // show(matrix.get(), matrix_size);
 
-    const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+    const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::clog << "`lu` took" << ' ' << duration << '\n';
 
     return 0;
