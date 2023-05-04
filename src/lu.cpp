@@ -17,6 +17,19 @@ using matrix_size_t = std::size_t;
 static constexpr matrix_size_t matrix_size = 8192;
 
 
+template<typename T>
+void show(matrix_t<T> A, const matrix_size_t N, std::ostream& out = std::cout)
+{
+    for (matrix_size_t i = 0; i < N; ++i) {
+        for (matrix_size_t j = 0; j < N; ++j) {
+            out << std::fixed << A[i * N + j] << '\t';
+        }
+
+        out << '\n';
+    }
+}
+
+
 template<typename T> 
 void lu(matrix_t<T> A, const matrix_size_t N)
 {
@@ -45,15 +58,6 @@ int main(void)
             A[i * N + i] = dist(rng) + static_cast<double>(N);
         }
     };
-
-    // const auto show = []<typename T>(matrix_t<T> A, const matrix_size_t N, std::ostream& out = std::cout) {
-    //     for (matrix_size_t i = 0; i < N; ++i) {
-    //         for (matrix_size_t j = 0; j < N; ++j) {
-    //             out << std::fixed << A[i * N + j] << '\t';
-    //         }
-    //         out << '\n';
-    //     }
-    // };
 
     auto matrix = std::make_unique<matrix_t<double>>(matrix_size * matrix_size);
     make_diagonal_dominant(matrix.get(), matrix_size);
