@@ -22,8 +22,8 @@ using block_size_t = std::size_t;
 static constexpr matrix_size_t matrix_size = 8192;
 static constexpr block_size_t block_size = 128;     // 128 seems to be the better value
 
-
-__global__ void baselu(double *A, const matrix_size_t N,
+template <typename T>
+__global__ void baselu(T *A, const matrix_size_t N,
             const block_size_t B,
             const matrix_size_t i){
     const auto [start, end] = std::make_pair(i * B, i * B + B);
@@ -39,8 +39,8 @@ __global__ void baselu(double *A, const matrix_size_t N,
     }
 }
 
-
-__global__ void row_col_solver(double *A, const matrix_size_t N, const int block_size, const matrix_size_t i){
+template <typename T>
+__global__ void row_col_solver(T *A, const matrix_size_t N, const int block_size, const matrix_size_t i){
     
     
     if (threadIdx.x < blockDim.x/2) { // utrsm
@@ -78,7 +78,8 @@ __global__ void row_col_solver(double *A, const matrix_size_t N, const int block
 
 }
 
-__global__ void gemm(double *A, int N, const int block_size, int i){
+template <typename T>
+__global__ void gemm(T *A, int N, const int block_size, int i){
     //if(threadIdx.x > ) return;
 
     const auto j = blockIdx.x + i + 1;
@@ -103,9 +104,9 @@ void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
 {
     const int blocks = static_cast<int>(N / B);
 
-    double* gpu_A;
-    cudaMalloc((void **)&gpu_A, N * N * sizeof(double));
-    cudaMemcpy(gpu_A, A, N * N * sizeof(double), cudaMemcpyHostToDevice);
+    T* gpu_A;
+    cudaMalloc((void **)&gpu_A, N * N * sizeof(T));
+    cudaMemcpy(gpu_A, A, N * N * sizeof(T), cudaMemcpyHostToDevice);
 
     dim3 grid_size(blocks);
     dim3 block_size(B);
@@ -130,7 +131,7 @@ void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
     }
 
 
-    cudaMemcpy(A, gpu_A, N * N * sizeof(double), cudaMemcpyDeviceToHost);
+    cudaMemcpy(A, gpu_A, N * N * sizeof(T), cudaMemcpyDeviceToHost);
     cudaFree(gpu_A);
 }
 
