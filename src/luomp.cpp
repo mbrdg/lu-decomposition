@@ -181,10 +181,11 @@ int main(void)
     lu(matrix.get(), matrix_size, block_size);
     const auto end = std::chrono::steady_clock::now();
 
-    //show(matrix.get(), matrix_size);
+    // WARN: be careful when calling this!
+    // show(matrix.get(), matrix_size);
 
     const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    std::clog << "`lu` took" << ' ' << duration.count() << '\n'
+    std::clog << "`lu` took" << ' ' << duration.count() << "ms" << '\n'
               << "matrix size:" << ' ' << matrix_size << '\n'
               << "block size:" << ' ' << block_size << '\n';
 
