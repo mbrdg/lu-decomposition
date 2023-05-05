@@ -19,8 +19,8 @@ using matrix_t = T[];
 using matrix_size_t = std::size_t;
 using block_size_t = std::size_t;
 
-static constexpr matrix_size_t matrix_size = 8;
-static constexpr block_size_t block_size = 2;     // 128 seems to be the better value
+static constexpr matrix_size_t matrix_size = 8192;
+static constexpr block_size_t block_size = 128;     // 128 seems to be the better value
 
 
 __global__ void baselu(double *A, const matrix_size_t N,
@@ -40,15 +40,15 @@ __global__ void baselu(double *A, const matrix_size_t N,
 }
 
 
-__global__ void row_col_solver(double *A, const matrix_size_t N, const matrix_size_t i){
+__global__ void row_col_solver(double *A, const matrix_size_t N, const int block_size, const matrix_size_t i){
     
     
     if (threadIdx.x < blockDim.x/2) { // utrsm
         const auto j = threadIdx.x + i + 1;
-        printf("j: %d\n", j);
 
-        const auto [start_row, end_row] = std::make_pair(i * blockDim.x, i * blockDim.x + blockDim.x);
-        const auto [start_col, end_col] = std::make_pair(j * blockDim.x, j * blockDim.x + blockDim.x);
+
+        const auto [start_row, end_row] = std::make_pair(i * block_size, i * block_size + block_size);
+        const auto [start_col, end_col] = std::make_pair(j * block_size, j * block_size + block_size);
 
         for (auto ii = start_row; ii < end_row - 1; ++ii) {
             for (auto jj = ii + 1; jj < blockDim.x; ++jj) {
@@ -59,15 +59,9 @@ __global__ void row_col_solver(double *A, const matrix_size_t N, const matrix_si
         }
     }
     else if(threadIdx.x < blockDim.x){ // ltrsm
-        const auto j = threadIdx.x - blockDim.x/2 + i + 1;
-        printf("j: %d\n", j);
-        const auto [start_row, end_row] = std::make_pair(i * blockDim.x, i * blockDim.x + blockDim.x);
-        const auto [start_col, end_col] = std::make_pair(j * blockDim.x, j * blockDim.x + blockDim.x);
-
-        printf("start_row: %d\n", start_row);
-        printf("end_row: %d\n", end_row);
-        printf("start_col: %d\n", start_col);
-        printf("end_col: %d\n", end_col);
+        auto j = threadIdx.x - blockDim.x/2 + i + 1;
+        const auto [start_row, end_row] = std::make_pair(i * block_size, i * block_size + block_size);
+        const auto [start_col, end_col] = std::make_pair(j * block_size, j * block_size + block_size);
 
         for (auto ii = start_row; A[ii * N + ii] != 0 && ii < end_row; ++ii) {
         
@@ -84,15 +78,15 @@ __global__ void row_col_solver(double *A, const matrix_size_t N, const matrix_si
 
 }
 
-__global__ void gemm(double *A, int N, int i){
+__global__ void gemm(double *A, int N, const int block_size, int i){
     //if(threadIdx.x > ) return;
 
     const auto j = blockIdx.x + i + 1;
     const auto k = threadIdx.x + i + 1;
 
-    const auto [si, ei] = std::make_pair(i * blockDim.x, i * blockDim.x + blockDim.x);
-    const auto [sj, ej] = std::make_pair(j * blockDim.x, j * blockDim.x + blockDim.x);
-    const auto [sk, ek] = std::make_pair(k * blockDim.x, k * blockDim.x + blockDim.x);
+    const auto [si, ei] = std::make_pair(i * block_size, i * block_size + block_size);
+    const auto [sj, ej] = std::make_pair(j * block_size, j * block_size + block_size);
+    const auto [sk, ek] = std::make_pair(k * block_size, k * block_size + block_size);
 
     for (auto ii = si; ii < ei; ++ii) {
         for (auto jj = sj; jj < ej; ++jj) {
@@ -117,20 +111,20 @@ void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
     dim3 block_size(B);
 
    
-    for (int i = 0; i < 1; ++i) { 
+    for (int i = 0; i < blocks; ++i) { 
         baselu<<<1, 1>>>(gpu_A, N, B, i);  // LU decomposition on the diagonal block
         
 
         cudaDeviceSynchronize();
 
           
-        row_col_solver<<<1, blocks*2-2>>>(gpu_A, N, i);  // solve the rows and columns of the diagonal block
+        row_col_solver<<<1, blocks*2-2>>>(gpu_A, N, B, i);  // solve the rows and columns of the diagonal block
 
         cudaDeviceSynchronize();
 
-        // gemm<<<blocks-1, blocks-1>>>(gpu_A, N, i);  // general matrix multiplication
+        gemm<<<blocks-1, blocks-1>>>(gpu_A, N, B, i);  // general matrix multiplication
 
-        // cudaDeviceSynchronize();
+        cudaDeviceSynchronize();
 
         
     }
@@ -178,7 +172,7 @@ main(void)
     lu(matrix.get(), matrix_size, block_size);
     const auto end = std::chrono::steady_clock::now();
 
-    show(matrix.get(), matrix_size, std::cout);
+    //show(matrix.get(), matrix_size, std::cout);
 
     const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::cout << "`lu` took" << ' ' << duration.count() << '\n'
