@@ -19,43 +19,87 @@ using matrix_t = T[];
 using matrix_size_t = std::size_t;
 using block_size_t = std::size_t;
 
-static constexpr matrix_size_t matrix_size = 8192;
-static constexpr block_size_t block_size = 128;     // 128 seems to be the better value
+static constexpr matrix_size_t matrix_size = 8;
+static constexpr block_size_t block_size = 2;     // 128 seems to be the better value
 
 
-__global__ void baselu(double *A, int N, int i){
-    int row = blockIdx.x * blockDim.x + threadIdx.x;
-    int col = blockIdx.y * blockDim.y + threadIdx.y;
+__global__ void baselu(double *A, const matrix_size_t N,
+            const block_size_t B,
+            const matrix_size_t i){
+    const auto [start, end] = std::make_pair(i * B, i * B + B);
 
-    if(row > i && col > i){
-        A[row * N + col] -= A[row * N + i] * A[i * N + col];
+    for (auto ii = start; A[ii * N + ii] != 0 && ii < end - 1; ++ii) {    
+        for (auto jj = ii + 1; jj < end; ++jj) {
+            A[jj * N + ii] /= A[ii * N + ii];
+
+            for (auto kk = ii + 1; kk < end; ++kk) {
+                A[jj * N + kk] -= A[jj * N + ii] * A[ii * N + kk];
+            }
+        }
     }
 }
 
-__global__ void utrsm(double *A, int N, int B, int i, int j){
-    int row = blockIdx.x * blockDim.x + threadIdx.x;
-    int col = blockIdx.y * blockDim.y + threadIdx.y;
 
-    if(row > i && col > j){
-        A[row * N + col] -= A[row * N + i] * A[i * N + col];
+__global__ void row_col_solver(double *A, const matrix_size_t N, const matrix_size_t i){
+    
+    
+    if (threadIdx.x < blockDim.x/2) { // utrsm
+        const auto j = threadIdx.x + i + 1;
+        printf("j: %d\n", j);
+
+        const auto [start_row, end_row] = std::make_pair(i * blockDim.x, i * blockDim.x + blockDim.x);
+        const auto [start_col, end_col] = std::make_pair(j * blockDim.x, j * blockDim.x + blockDim.x);
+
+        for (auto ii = start_row; ii < end_row - 1; ++ii) {
+            for (auto jj = ii + 1; jj < blockDim.x; ++jj) {
+                for (auto kk = start_col; kk < end_col; ++kk) {
+                    A[jj * N + kk] -= A[jj * N + ii] * A[ii * N + kk];
+                }
+            }
+        }
     }
+    else if(threadIdx.x < blockDim.x){ // ltrsm
+        const auto j = threadIdx.x - blockDim.x/2 + i + 1;
+        printf("j: %d\n", j);
+        const auto [start_row, end_row] = std::make_pair(i * blockDim.x, i * blockDim.x + blockDim.x);
+        const auto [start_col, end_col] = std::make_pair(j * blockDim.x, j * blockDim.x + blockDim.x);
+
+        printf("start_row: %d\n", start_row);
+        printf("end_row: %d\n", end_row);
+        printf("start_col: %d\n", start_col);
+        printf("end_col: %d\n", end_col);
+
+        for (auto ii = start_row; A[ii * N + ii] != 0 && ii < end_row; ++ii) {
+        
+            for (auto jj = start_col; jj < end_col; ++jj) {
+                A[jj * N + ii] /= A[ii * N + ii];
+
+                for (auto kk = ii + 1; kk < end_row; ++kk) {
+                    A[jj * N + kk] -= A[jj * N + ii] * A[ii * N + kk];
+                }
+            }
+        }
+    }
+
+
 }
 
-__global__ void ltrsm(double *A, int N, int B, int i, int j){
-    int row = blockIdx.x * blockDim.x + threadIdx.x;
-    int col = blockIdx.y * blockDim.y + threadIdx.y;
+__global__ void gemm(double *A, int N, int i){
+    //if(threadIdx.x > ) return;
 
-    if(row > j && col > i){
-        A[row * N + col] -= A[row * N + i] * A[i * N + col];
-    }
-}
+    const auto j = blockIdx.x + i + 1;
+    const auto k = threadIdx.x + i + 1;
 
-__global__ void gemm(double *A, int N, int B, int i, int j, int k){
-    int row = blockIdx.x * blockDim.x + threadIdx.x;
-    int col = blockIdx.y * blockDim.y + threadIdx.y;
+    const auto [si, ei] = std::make_pair(i * blockDim.x, i * blockDim.x + blockDim.x);
+    const auto [sj, ej] = std::make_pair(j * blockDim.x, j * blockDim.x + blockDim.x);
+    const auto [sk, ek] = std::make_pair(k * blockDim.x, k * blockDim.x + blockDim.x);
 
-    if(row > j && col > k){
-        A[row * N + col] -= A[row * N + i] * A[i * N + col];
+    for (auto ii = si; ii < ei; ++ii) {
+        for (auto jj = sj; jj < ej; ++jj) {
+            for (auto kk = sk; kk < ek; ++kk) {
+                A[jj * N + kk] -= A[jj * N + ii] * A[ii * N + kk];
+            }
+        }
     }
 }
 
@@ -73,28 +117,27 @@ void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
     dim3 block_size(B);
 
    
-    for (int i = 0; i < blocks; ++i) { 
+    for (int i = 0; i < 1; ++i) { 
+        baselu<<<1, 1>>>(gpu_A, N, B, i);  // LU decomposition on the diagonal block
         
-        baselu<<<grid_size, block_size>>>(gpu_A, N, i);  // LU decomposition on the diagonal block
 
         cudaDeviceSynchronize();
 
-        for (int j = i + 1; j < blocks; ++j) {
-           
-            
-            utrsm<<<grid_size, block_size>>>(gpu_A, N, B, i, j);    // upper triangular matrix solver
-        }
+          
+        row_col_solver<<<1, blocks*2-2>>>(gpu_A, N, i);  // solve the rows and columns of the diagonal block
 
-        for (int j = i + 1; j < blocks; ++j) {
-            
-            ltrsm<<<grid_size, block_size>>>(gpu_A, N, B, i, j);    // lower triangular matrix solver
+        cudaDeviceSynchronize();
 
-            for (int k = i + 1; k < blocks; ++k) {
-                
-                gemm<<<grid_size, block_size>>>(gpu_A, N, B, i, j, k);  // general matrix multiplication
-            }
-        }
+        // gemm<<<blocks-1, blocks-1>>>(gpu_A, N, i);  // general matrix multiplication
+
+        // cudaDeviceSynchronize();
+
+        
     }
+
+
+    cudaMemcpy(A, gpu_A, N * N * sizeof(double), cudaMemcpyDeviceToHost);
+    cudaFree(gpu_A);
 }
 
 template<typename T>
@@ -106,6 +149,16 @@ void make_diagonal_dominant(matrix_t<T> A, const matrix_size_t N){
         for (matrix_size_t j = 0; j < N; ++j)
             A[i * N + j] = 2.0 * dist(rng) - 1.0;
         A[i * N + i] = dist(rng) + static_cast<T>(N);
+    }
+}
+
+template<typename T>
+void show(matrix_t<T> A, const matrix_size_t N, std::ostream& out = std::cout) {
+    for (matrix_size_t i = 0; i < N; ++i) {
+        for (matrix_size_t j = 0; j < N; ++j) {
+            out << std::fixed << A[i * N + j] << '\t';
+        }
+        out << '\n';
     }
 }
 
@@ -125,13 +178,12 @@ main(void)
     lu(matrix.get(), matrix_size, block_size);
     const auto end = std::chrono::steady_clock::now();
 
-
-    // show(matrix.get(), matrix_size);
+    show(matrix.get(), matrix_size, std::cout);
 
     const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    // std::cout << "`lu` took" << ' ' << duration << '\n'
-    //           << "matrix size:" << ' ' << matrix_size << '\n'
-    //           << "block size:" << ' ' << block_size << '\n';
+    std::cout << "`lu` took" << ' ' << duration.count() << '\n'
+              << "matrix size:" << ' ' << matrix_size << '\n'
+              << "block size:" << ' ' << block_size << '\n';
 
     return 0;
 }
