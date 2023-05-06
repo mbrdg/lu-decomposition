@@ -25,9 +25,5 @@ lusycl: src/lusycl.cpp
 	@mkdir -p bin/
 	$(SYCLXX) $(SYCLFLAGS) $< -o bin/$@.out
 
-lublksycl: src/lublksycl.cpp
-	@mkdir -p bin/
-	$(SYCLXX) $(SYCLFLAGS) $< -o bin/$@.out
-
 clean:
 	$(RM) bin/*.out
