@@ -60,7 +60,7 @@ void baselu(sycl::queue& q,
         q.submit([&](sycl::handler& h) {
             auto accessor = diagonal_block.get_access(h);
             h.parallel_for(sycl::range(B - ii - 1), [=](sycl::id<1> idx) {
-                matrix_size_t jj = ii + 1 + idx;
+                const matrix_size_t jj = ii + 1 + idx;
                 accessor[jj][ii] /= accessor[ii][ii];
             });
         });
@@ -68,7 +68,7 @@ void baselu(sycl::queue& q,
         q.submit([&](sycl::handler& h) {
             auto accessor = diagonal_block.get_access(h);
             h.parallel_for(sycl::range(B - ii - 1), [=](sycl::id<1> idx) {
-                matrix_size_t jj = ii + 1 + idx;
+                const matrix_size_t jj = ii + 1 + idx;
                 for (matrix_size_t kk = ii + 1; kk < B; ++kk)
                     accessor[jj][kk] -= accessor[jj][ii] * accessor[ii][kk];
             });
