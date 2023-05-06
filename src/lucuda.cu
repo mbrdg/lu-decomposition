@@ -1,12 +1,10 @@
 /*
- *  luomp.cpp - OpenMP version of block LU decomposition
+ *  lucuda.cpp - CUDA version of block LU decomposition
  *  CPA @ M.EIC, 2023
  *  Authors:
  *      Miguel Rodrigues <up201906042@edu.fe.up.pt>
  *      Sérgio Estêvão <up201905680@edu.fe.up.pt>
  */
-#include <omp.h>
-#include <algorithm>
 #include <chrono>
 #include <iostream>
 #include <memory>
