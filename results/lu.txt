@@ -1,0 +1,190 @@
+1024:
+`lu` took 193
+matrix size: 1024
+
+ Performance counter stats for './bin/lu.out':
+
+            243,42 msec task-clock                #    0,995 CPUs utilized          
+                 0      context-switches          #    0,000 /sec                   
+                 0      cpu-migrations            #    0,000 /sec                   
+              2175      page-faults               #    8,935 K/sec                  
+         572593498      cycles                    #    2,352 GHz                      (47,42%)
+        1578167307      instructions              #    2,76  insn per cycle           (60,56%)
+         196004641      branches                  #  805,217 M/sec                    (61,87%)
+           1814528      branch-misses             #    0,93% of all branches          (63,52%)
+         365969817      L1-dcache-loads           #    1,503 G/sec                    (65,16%)
+          44610201      L1-dcache-load-misses     #   12,19% of all L1-dcache accesses  (64,42%)
+           6458328      LLC-loads                 #   26,532 M/sec                    (49,63%)
+            787757      LLC-load-misses           #   12,20% of all LL-cache accesses  (47,98%)
+
+       0,244583569 seconds time elapsed
+
+       0,232648000 seconds user
+       0,012033000 seconds sys
+
+2048:
+`lu` took 1907
+matrix size: 2048
+
+ Performance counter stats for './bin/lu.out':
+
+           2011,81 msec task-clock                #    1,000 CPUs utilized          
+                 6      context-switches          #    2,982 /sec                   
+                 1      cpu-migrations            #    0,497 /sec                   
+              8319      page-faults               #    4,135 K/sec                  
+        5244911765      cycles                    #    2,607 GHz                      (49,90%)
+       11965986465      instructions              #    2,28  insn per cycle           (62,42%)
+        1492783981      branches                  #  742,011 M/sec                    (62,42%)
+           6703473      branch-misses             #    0,45% of all branches          (62,42%)
+        2929083162      L1-dcache-loads           #    1,456 G/sec                    (62,58%)
+         375985608      L1-dcache-load-misses     #   12,84% of all L1-dcache accesses  (62,63%)
+          57978948      LLC-loads                 #   28,819 M/sec                    (50,10%)
+          28029313      LLC-load-misses           #   48,34% of all LL-cache accesses  (49,95%)
+
+       2,012429773 seconds time elapsed
+
+       1,984409000 seconds user
+       0,028005000 seconds sys
+3072:
+`lu` took 7180
+matrix size: 3072
+
+ Performance counter stats for './bin/lu.out':
+
+           7424,55 msec task-clock                #    1,000 CPUs utilized          
+                17      context-switches          #    2,290 /sec                   
+                 2      cpu-migrations            #    0,269 /sec                   
+             18558      page-faults               #    2,500 K/sec                  
+       19225474573      cycles                    #    2,589 GHz                      (50,01%)
+       39768923530      instructions              #    2,07  insn per cycle           (62,50%)
+        4964072872      branches                  #  668,602 M/sec                    (62,50%)
+          15168330      branch-misses             #    0,31% of all branches          (62,50%)
+        9805622346      L1-dcache-loads           #    1,321 G/sec                    (62,50%)
+        1974676058      L1-dcache-load-misses     #   20,14% of all L1-dcache accesses  (62,49%)
+         213374295      LLC-loads                 #   28,739 M/sec                    (50,00%)
+         132040660      LLC-load-misses           #   61,88% of all LL-cache accesses  (50,00%)
+
+       7,425757804 seconds time elapsed
+
+       7,373555000 seconds user
+       0,052010000 seconds sys
+    
+4096:
+`lu` took 17439
+matrix size: 4096
+
+ Performance counter stats for './bin/lu.out':
+
+          17838,12 msec task-clock                #    0,999 CPUs utilized          
+               356      context-switches          #   19,957 /sec                   
+                 3      cpu-migrations            #    0,168 /sec                   
+             32894      page-faults               #    1,844 K/sec                  
+       46235476911      cycles                    #    2,592 GHz                      (49,98%)
+       93644133163      instructions              #    2,03  insn per cycle           (62,48%)
+       11694075711      branches                  #  655,566 M/sec                    (62,48%)
+          26423327      branch-misses             #    0,23% of all branches          (62,52%)
+       23172871533      L1-dcache-loads           #    1,299 G/sec                    (62,52%)
+        5341526744      L1-dcache-load-misses     #   23,05% of all L1-dcache accesses  (62,53%)
+         526135380      LLC-loads                 #   29,495 M/sec                    (50,00%)
+         356542172      LLC-load-misses           #   67,77% of all LL-cache accesses  (49,96%)
+
+      17,848035800 seconds time elapsed
+
+      17,763227000 seconds user
+       0,075979000 seconds sys
+
+5120:
+`lu` took 27583
+matrix size: 5120
+
+ Performance counter stats for './bin/lu.out':
+
+          27990,64 msec task-clock                #    1,000 CPUs utilized          
+               564      context-switches          #   20,150 /sec                   
+                 5      cpu-migrations            #    0,179 /sec                   
+             51326      page-faults               #    1,834 K/sec                  
+      121708069569      cycles                    #    4,348 GHz                      (49,97%)
+      182300232381      instructions              #    1,50  insn per cycle           (62,49%)
+       22761095083      branches                  #  813,168 M/sec                    (62,49%)
+          42203289      branch-misses             #    0,19% of all branches          (62,49%)
+       45122061738      L1-dcache-loads           #    1,612 G/sec                    (62,52%)
+       10861643199      L1-dcache-load-misses     #   24,07% of all L1-dcache accesses  (62,53%)
+        1174097059      LLC-loads                 #   41,946 M/sec                    (50,01%)
+         797142569      LLC-load-misses           #   67,89% of all LL-cache accesses  (49,99%)
+
+      28,001304339 seconds time elapsed
+
+      27,864055000 seconds user
+       0,128000000 seconds sys
+
+6144:
+`lu` took 59700
+matrix size: 6144
+
+ Performance counter stats for './bin/lu.out':
+
+          60589,11 msec task-clock                #    1,000 CPUs utilized          
+               226      context-switches          #    3,730 /sec                   
+                 2      cpu-migrations            #    0,033 /sec                   
+             73855      page-faults               #    1,219 K/sec                  
+      156936519926      cycles                    #    2,590 GHz                      (49,99%)
+      313654898950      instructions              #    2,00  insn per cycle           (62,50%)
+       39183062522      branches                  #  646,701 M/sec                    (62,50%)
+          60016442      branch-misses             #    0,15% of all branches          (62,51%)
+       77934719283      L1-dcache-loads           #    1,286 G/sec                    (62,51%)
+       19131450509      L1-dcache-load-misses     #   24,55% of all L1-dcache accesses  (62,50%)
+        1953888710      LLC-loads                 #   32,248 M/sec                    (49,99%)
+        1281017256      LLC-load-misses           #   65,56% of all LL-cache accesses  (49,99%)
+
+      60,592398388 seconds time elapsed
+
+      60,445683000 seconds user
+       0,143994000 seconds sys
+7168
+`lu` took 76710
+matrix size: 7168
+
+ Performance counter stats for './bin/lu.out':
+
+          77482,15 msec task-clock                #    1,000 CPUs utilized          
+               367      context-switches          #    4,737 /sec                   
+                18      cpu-migrations            #    0,232 /sec                   
+            100477      page-faults               #    1,297 K/sec                  
+      337120897150      cycles                    #    4,351 GHz                      (49,99%)
+      497107282696      instructions              #    1,47  insn per cycle           (62,50%)
+       62133797327      branches                  #  801,911 M/sec                    (62,50%)
+          81712206      branch-misses             #    0,13% of all branches          (62,51%)
+      123659982503      L1-dcache-loads           #    1,596 G/sec                    (62,51%)
+       30664230480      L1-dcache-load-misses     #   24,80% of all L1-dcache accesses  (62,51%)
+        3407517825      LLC-loads                 #   43,978 M/sec                    (49,99%)
+        2271249158      LLC-load-misses           #   66,65% of all LL-cache accesses  (49,99%)
+
+      77,486418743 seconds time elapsed
+
+      77,330669000 seconds user
+       0,151997000 seconds sys
+
+8192:
+`lu` took 147745
+matrix size: 8192
+
+ Performance counter stats for './bin/lu.out':
+
+         149354,25 msec task-clock                #    1,000 CPUs utilized          
+               371      context-switches          #    2,484 /sec                   
+                16      cpu-migrations            #    0,107 /sec                   
+            131200      page-faults               #  878,448 /sec                   
+      386809727630      cycles                    #    2,590 GHz                      (49,99%)
+      741120562252      instructions              #    1,92  insn per cycle           (62,50%)
+       92592883811      branches                  #  619,955 M/sec                    (62,50%)
+         106377970      branch-misses             #    0,11% of all branches          (62,50%)
+      184341367191      L1-dcache-loads           #    1,234 G/sec                    (62,51%)
+       45973958960      L1-dcache-load-misses     #   24,94% of all L1-dcache accesses  (62,50%)
+        4880404468      LLC-loads                 #   32,677 M/sec                    (50,00%)
+        3251830110      LLC-load-misses           #   66,63% of all LL-cache accesses  (49,99%)
+
+     149,360167816 seconds time elapsed
+
+     149,043219000 seconds user
+       0,311989000 seconds sys
+       

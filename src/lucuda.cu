@@ -114,17 +114,12 @@ void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
    
     for (int i = 0; i < blocks; ++i) { 
         baselu<<<1, 1>>>(gpu_A, N, B, i);  // LU decomposition on the diagonal block
-        
-
         cudaDeviceSynchronize();
-
           
         row_col_solver<<<1, blocks*2-2>>>(gpu_A, N, B, i);  // solve the rows and columns of the diagonal block
-
         cudaDeviceSynchronize();
 
         gemm<<<blocks-1, blocks-1>>>(gpu_A, N, B, i);  // general matrix multiplication
-
         cudaDeviceSynchronize();
 
         
