@@ -59,15 +59,6 @@ int main(void)
         }
     };
 
-    // const auto show = []<typename T>(matrix_t<T> A, const matrix_size_t N, std::ostream& out = std::cout) {
-    //     for (matrix_size_t i = 0; i < N; ++i) {
-    //         for (matrix_size_t j = 0; j < N; ++j) {
-    //             out << std::fixed << A[i * N + j] << '\t';
-    //         }
-    //         out << '\n';
-    //     }
-    // };
-
     auto matrix = std::make_unique<matrix_t<double>>(matrix_size * matrix_size);
     make_diagonal_dominant(matrix.get(), matrix_size);
 
@@ -75,10 +66,11 @@ int main(void)
     lu(matrix.get(), matrix_size);
     const auto end = std::chrono::steady_clock::now();
 
-    //show(matrix.get(), matrix_size);
+    // WARN: be careful with what you print
+    // show(matrix.get(), matrix_size);
 
     const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    std::clog << "`lu` took" << ' ' << duration.count() << '\n'
+    std::clog << "`lu` took" << ' ' << duration.count() << "ms" << '\n'
               << "matrix size:" << ' ' << matrix_size << '\n';
 
     return 0;
