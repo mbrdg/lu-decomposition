@@ -25,6 +25,7 @@ all: lu lublk luomp lucuda lusycl
 	$(CUXX) $(CUDAFLAGS) $< -o bin/$@.out
 
 ## TODO: make it compile to OpenMP or in the CPU
+## Run this first: `source /opt/intel/oneapi/setvars.sh --include-intel-llvm`
 lusycl: src/lusycl.cpp
 	@mkdir -p bin/
 	$(SYCLXX) $(SYCLFLAGS) $< -o bin/$@.out
