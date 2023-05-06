@@ -19,8 +19,8 @@ using matrix_t = T[];
 using matrix_size_t = std::size_t;
 using block_size_t = std::size_t;
 
-static constexpr matrix_size_t matrix_size = 1024;
-static constexpr block_size_t block_size = 128;     // 128 seems to be the better value
+static constexpr matrix_size_t matrix_size = 8192;
+static constexpr block_size_t block_size = 256;     // 128 seems to be the better value
 
 
 template<typename T>
