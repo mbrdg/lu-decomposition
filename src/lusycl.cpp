@@ -165,19 +165,19 @@ void gemm(sycl::queue& q,
 template <typename T>
 void lu(sycl::queue& q, matrix_t<T> A, const matrix_size_t N, const block_size_t B)
 {
-    const int blocks = static_cast<int>(N / B);
+    const matrix_size_t blocks = N / B;
 
-    for (int i = 0; i < blocks; ++i) {
+    for (matrix_size_t i = 0; i < blocks; ++i) {
         baselu(q, A, N, B, i);
 
-        for (int j = i + 1; j < blocks; ++j) {
+        for (matrix_size_t j = i + 1; j < blocks; ++j) {
             utrsm(q, A, N, B, i, j);
         }
 
-        for (int j = i + 1; j < blocks; ++j) {
+        for (matrix_size_t j = i + 1; j < blocks; ++j) {
             ltrsm(q, A, N, B, i, j);
 
-            for (int k = i + 1; k < blocks; ++k) {
+            for (matrix_size_t k = i + 1; k < blocks; ++k) {
                 gemm(q, A, N, B, i, j, k);
             }
         }
@@ -190,8 +190,6 @@ main(void)
     sycl::device dev(sycl::default_selector_v);
     sycl::queue q(dev);
 
-    std::clog << "running on:" << ' ' << q.get_device().get_info<sycl::info::device::name>() << '\n';
-
     auto matrix = std::make_unique<matrix_t<double>>(matrix_size * matrix_size);
     make_diagonal_dominant(matrix.get(), matrix_size);
 
@@ -203,7 +201,8 @@ main(void)
     // show(matrix.get(), matrix_size);
 
     const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    std::clog << "`lu` took" << ' ' << duration.count() << '\n'
+    std::clog << "running on:" << ' ' << q.get_device().get_info<sycl::info::device::name>() << '\n'
+              << "`lu` took" << ' ' << duration.count() << "ms" << '\n'
               << "matrix size:" << ' ' << matrix_size << '\n'
               << "block size:" << ' ' << block_size << '\n';
 

@@ -6,7 +6,9 @@ CXXFLAGS=-std=c++20 -O3 -Wall -Wextra -Werror -pedantic -Wconversion -Wshadow
 CUXX=nvcc
 CUDAFLAGS=--expt-relaxed-constexpr
 SYCLXX=clang++
-SYCLFLAGS=-fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend=nvptx64-nvidia-cuda --cuda-gpu-arch=sm_75
+SYCLFLAGS=-std=c++20 -O2 -Wall -Wextra -Wpedantic -Wconversion -Wshadow \
+	-fsycl -fsycl-targets=nvptx64-nvidia-cuda -Xsycl-target-backend=nvptx64-nvidia-cuda \
+	--cuda-gpu-arch=sm_75
 
 .PHONY: clean all
 
