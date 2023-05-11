@@ -1,0 +1,195 @@
+1024
+`lu` took 348ms
+matrix size: 1024
+block size: 512
+
+ Performance counter stats for './bin/lusycl.out':
+
+            669,91 msec task-clock                #    0,979 CPUs utilized          
+               235      context-switches          #  350,794 /sec                   
+                 3      cpu-migrations            #    4,478 /sec                   
+             15286      page-faults               #   22,818 K/sec                  
+        1717875549      cycles                    #    2,564 GHz                      (50,12%)
+        2359854113      instructions              #    1,37  insn per cycle           (62,52%)
+         462874935      branches                  #  690,952 M/sec                    (62,59%)
+           1393924      branch-misses             #    0,30% of all branches          (62,67%)
+         745359543      L1-dcache-loads           #    1,113 G/sec                    (62,26%)
+          27132033      L1-dcache-load-misses     #    3,64% of all L1-dcache accesses  (62,21%)
+           2524766      LLC-loads                 #    3,769 M/sec                    (50,76%)
+            834335      LLC-load-misses           #   33,05% of all LL-cache accesses  (50,16%)
+
+       0,684298067 seconds time elapsed
+
+       0,507880000 seconds user
+       0,163961000 seconds sys
+2048
+running on: NVIDIA GeForce GTX 1650
+`lu` took 667ms
+matrix size: 2048
+block size: 512
+
+ Performance counter stats for './bin/lusycl.out':
+
+           1344,08 msec task-clock                #    0,994 CPUs utilized          
+               177      context-switches          #  131,689 /sec                   
+                 0      cpu-migrations            #    0,000 /sec                   
+             21609      page-faults               #   16,077 K/sec                  
+        3418741595      cycles                    #    2,544 GHz                      (49,26%)
+        4422345627      instructions              #    1,29  insn per cycle           (62,52%)
+         806914296      branches                  #  600,348 M/sec                    (62,97%)
+           1685962      branch-misses             #    0,21% of all branches          (63,13%)
+        1388027847      L1-dcache-loads           #    1,033 G/sec                    (63,34%)
+          50219330      L1-dcache-load-misses     #    3,62% of all L1-dcache accesses  (62,93%)
+           3377040      LLC-loads                 #    2,513 M/sec                    (49,70%)
+           1206312      LLC-load-misses           #   35,72% of all LL-cache accesses  (49,23%)
+
+       1,351813412 seconds time elapsed
+
+       1,152833000 seconds user
+       0,193482000 seconds sys
+3072
+`lu` took 1298ms
+matrix size: 3072
+block size: 512
+
+ Performance counter stats for './bin/lusycl.out':
+
+           2510,62 msec task-clock                #    0,997 CPUs utilized          
+               198      context-switches          #   78,865 /sec                   
+                 3      cpu-migrations            #    1,195 /sec                   
+             32027      page-faults               #   12,757 K/sec                  
+        6550988470      cycles                    #    2,609 GHz                      (49,86%)
+        8572951969      instructions              #    1,31  insn per cycle           (62,42%)
+        1518130942      branches                  #  604,684 M/sec                    (62,04%)
+           1955837      branch-misses             #    0,13% of all branches          (62,19%)
+        2634362851      L1-dcache-loads           #    1,049 G/sec                    (62,74%)
+         111838661      L1-dcache-load-misses     #    4,25% of all L1-dcache accesses  (63,01%)
+           7460465      LLC-loads                 #    2,972 M/sec                    (50,44%)
+           2741491      LLC-load-misses           #   36,75% of all LL-cache accesses  (50,05%)
+
+       2,517967809 seconds time elapsed
+
+       2,255913000 seconds user
+       0,256444000 seconds sys
+4096
+running on: NVIDIA GeForce GTX 1650
+`lu` took 2568ms
+matrix size: 4096
+block size: 512
+
+ Performance counter stats for './bin/lusycl.out':
+
+           4573,69 msec task-clock                #    0,996 CPUs utilized          
+               375      context-switches          #   81,991 /sec                   
+                 9      cpu-migrations            #    1,968 /sec                   
+             46482      page-faults               #   10,163 K/sec                  
+       11848349665      cycles                    #    2,591 GHz                      (49,93%)
+       15420908497      instructions              #    1,30  insn per cycle           (62,44%)
+        2722097405      branches                  #  595,164 M/sec                    (62,49%)
+           4282447      branch-misses             #    0,16% of all branches          (62,42%)
+        4732636103      L1-dcache-loads           #    1,035 G/sec                    (62,63%)
+         205382962      L1-dcache-load-misses     #    4,34% of all L1-dcache accesses  (62,54%)
+          17542979      LLC-loads                 #    3,836 M/sec                    (50,04%)
+           7160555      LLC-load-misses           #   40,82% of all LL-cache accesses  (50,04%)
+
+       4,593392619 seconds time elapsed
+
+       4,208213000 seconds user
+       0,368719000 seconds sys
+5120
+`lu` took 3507ms
+matrix size: 5120
+block size: 512
+
+ Performance counter stats for './bin/lusycl.out':
+
+           6517,10 msec task-clock                #    0,993 CPUs utilized          
+               865      context-switches          #  132,728 /sec                   
+                 4      cpu-migrations            #    0,614 /sec                   
+             64921      page-faults               #    9,962 K/sec                  
+       17038496133      cycles                    #    2,614 GHz                      (50,02%)
+       21781386071      instructions              #    1,28  insn per cycle           (62,54%)
+        3769467733      branches                  #  578,397 M/sec                    (62,63%)
+           6339234      branch-misses             #    0,17% of all branches          (62,62%)
+        6639846109      L1-dcache-loads           #    1,019 G/sec                    (62,71%)
+         259735913      L1-dcache-load-misses     #    3,91% of all L1-dcache accesses  (62,45%)
+          25150426      LLC-loads                 #    3,859 M/sec                    (49,81%)
+           9119618      LLC-load-misses           #   36,26% of all LL-cache accesses  (49,97%)
+
+       6,562068507 seconds time elapsed
+
+       6,045855000 seconds user
+       0,475202000 seconds sys
+6144
+`lu` took 5509ms
+matrix size: 6144
+block size: 512
+
+ Performance counter stats for './bin/lusycl.out':
+
+           9773,35 msec task-clock                #    0,998 CPUs utilized          
+               466      context-switches          #   47,681 /sec                   
+                15      cpu-migrations            #    1,535 /sec                   
+             87455      page-faults               #    8,948 K/sec                  
+       25534590455      cycles                    #    2,613 GHz                      (49,98%)
+       31627074195      instructions              #    1,24  insn per cycle           (62,43%)
+        5471224994      branches                  #  559,811 M/sec                    (62,44%)
+          12059266      branch-misses             #    0,22% of all branches          (62,38%)
+        9726335769      L1-dcache-loads           #  995,190 M/sec                    (62,48%)
+         421907867      L1-dcache-load-misses     #    4,34% of all L1-dcache accesses  (62,55%)
+          48218190      LLC-loads                 #    4,934 M/sec                    (50,16%)
+          21011238      LLC-load-misses           #   43,58% of all LL-cache accesses  (50,08%)
+
+       9,793735811 seconds time elapsed
+
+       9,122072000 seconds user
+       0,654713000 seconds sys
+7168
+`lu` took 7461ms
+matrix size: 7168
+block size: 512
+
+ Performance counter stats for './bin/lusycl.out':
+
+          13193,72 msec task-clock                #    0,997 CPUs utilized          
+              1096      context-switches          #   83,070 /sec                   
+                12      cpu-migrations            #    0,910 /sec                   
+            114082      page-faults               #    8,647 K/sec                  
+       34104961403      cycles                    #    2,585 GHz                      (49,95%)
+       43739123486      instructions              #    1,28  insn per cycle           (62,50%)
+        7564687231      branches                  #  573,355 M/sec                    (62,54%)
+           8769697      branch-misses             #    0,12% of all branches          (62,58%)
+       13479977566      L1-dcache-loads           #    1,022 G/sec                    (62,58%)
+         590339461      L1-dcache-load-misses     #    4,38% of all L1-dcache accesses  (62,50%)
+          66589196      LLC-loads                 #    5,047 M/sec                    (50,00%)
+          23318952      LLC-load-misses           #   35,02% of all LL-cache accesses  (49,94%)
+
+      13,233826724 seconds time elapsed
+
+      12,365234000 seconds user
+       0,833431000 seconds sys
+       
+8192
+`lu` took 10317ms
+matrix size: 8192
+block size: 512
+
+ Performance counter stats for './bin/lusycl.out':
+
+          17703,13 msec task-clock                #    0,994 CPUs utilized          
+              1940      context-switches          #  109,585 /sec                   
+                18      cpu-migrations            #    1,017 /sec                   
+            144809      page-faults               #    8,180 K/sec                  
+       45973882067      cycles                    #    2,597 GHz                      (50,17%)
+       58725451365      instructions              #    1,28  insn per cycle           (62,61%)
+       10140426194      branches                  #  572,804 M/sec                    (62,57%)
+          19203612      branch-misses             #    0,19% of all branches          (62,50%)
+       18154248356      L1-dcache-loads           #    1,025 G/sec                    (62,41%)
+         890309764      L1-dcache-load-misses     #    4,90% of all L1-dcache accesses  (62,37%)
+          93529563      LLC-loads                 #    5,283 M/sec                    (50,02%)
+          33543732      LLC-load-misses           #   35,86% of all LL-cache accesses  (50,12%)
+
+      17,802638909 seconds time elapsed
+
+      16,475314000 seconds user
+       1,235648000 seconds sys

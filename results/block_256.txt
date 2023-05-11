@@ -1,0 +1,196 @@
+1024
+`lu` took 170ms
+matrix size: 1024
+block size: 256
+
+ Performance counter stats for './bin/lublk.out':
+
+            206,46 msec task-clock                #    0,987 CPUs utilized          
+                38      context-switches          #  184,055 /sec                   
+                 0      cpu-migrations            #    0,000 /sec                   
+              2174      page-faults               #   10,530 K/sec                  
+         508481629      cycles                    #    2,463 GHz                      (47,87%)
+        1495552397      instructions              #    2,94  insn per cycle           (61,31%)
+         189019366      branches                  #  915,527 M/sec                    (64,84%)
+           2320859      branch-misses             #    1,23% of all branches          (65,44%)
+         356737376      L1-dcache-loads           #    1,728 G/sec                    (65,28%)
+          45605957      L1-dcache-load-misses     #   12,78% of all L1-dcache accesses  (63,71%)
+           7754191      LLC-loads                 #   37,558 M/sec                    (46,73%)
+             23477      LLC-load-misses           #    0,30% of all LL-cache accesses  (46,12%)
+
+       0,209219456 seconds time elapsed
+
+       0,199236000 seconds user
+       0,007969000 seconds sys
+
+2048
+`lu` took 1362ms
+matrix size: 2048
+block size: 256
+
+ Performance counter stats for './bin/lublk.out':
+
+           1476,07 msec task-clock                #    0,999 CPUs utilized          
+                 5      context-switches          #    3,387 /sec                   
+                 0      cpu-migrations            #    0,000 /sec                   
+              8320      page-faults               #    5,637 K/sec                  
+        3802896531      cycles                    #    2,576 GHz                      (50,06%)
+       11504818813      instructions              #    3,03  insn per cycle           (62,60%)
+        1444345180      branches                  #  978,508 M/sec                    (62,61%)
+          15269889      branch-misses             #    1,06% of all branches          (62,61%)
+        2798982949      L1-dcache-loads           #    1,896 G/sec                    (62,61%)
+         365533721      L1-dcache-load-misses     #   13,06% of all L1-dcache accesses  (62,40%)
+          67633136      LLC-loads                 #   45,820 M/sec                    (49,85%)
+            372080      LLC-load-misses           #    0,55% of all LL-cache accesses  (49,85%)
+
+       1,477199059 seconds time elapsed
+
+       1,449103000 seconds user
+       0,028021000 seconds sys
+3072
+`lu` took 4650ms
+matrix size: 3072
+block size: 256
+
+ Performance counter stats for './bin/lublk.out':
+
+           4881,47 msec task-clock                #    1,000 CPUs utilized          
+                15      context-switches          #    3,073 /sec                   
+                 2      cpu-migrations            #    0,410 /sec                   
+             18560      page-faults               #    3,802 K/sec                  
+       12633002741      cycles                    #    2,588 GHz                      (49,85%)
+       38937264174      instructions              #    3,08  insn per cycle           (62,39%)
+        4880586436      branches                  #  999,820 M/sec                    (62,47%)
+          45681901      branch-misses             #    0,94% of all branches          (62,55%)
+        9531814191      L1-dcache-loads           #    1,953 G/sec                    (62,64%)
+        1252482159      L1-dcache-load-misses     #   13,14% of all L1-dcache accesses  (62,60%)
+         216709445      LLC-loads                 #   44,394 M/sec                    (49,99%)
+           3798716      LLC-load-misses           #    1,75% of all LL-cache accesses  (49,90%)
+
+       4,883135166 seconds time elapsed
+
+       4,826844000 seconds user
+       0,055986000 seconds sys
+
+4096
+`lu` took 11062ms
+matrix size: 4096
+block size: 256
+
+ Performance counter stats for './bin/lublk.out':
+
+          11464,82 msec task-clock                #    1,000 CPUs utilized          
+                49      context-switches          #    4,274 /sec                   
+                 3      cpu-migrations            #    0,262 /sec                   
+             32893      page-faults               #    2,869 K/sec                  
+       30116068134      cycles                    #    2,627 GHz                      (49,99%)
+       92393151046      instructions              #    3,07  insn per cycle           (62,51%)
+       11586430823      branches                  #    1,011 G/sec                    (62,53%)
+         103590589      branch-misses             #    0,89% of all branches          (62,53%)
+       22739514391      L1-dcache-loads           #    1,983 G/sec                    (62,53%)
+        2999855239      L1-dcache-load-misses     #   13,19% of all L1-dcache accesses  (62,50%)
+         544085558      LLC-loads                 #   47,457 M/sec                    (49,96%)
+           8123498      LLC-load-misses           #    1,49% of all LL-cache accesses  (49,96%)
+
+      11,466236862 seconds time elapsed
+
+      11,397435000 seconds user
+       0,068008000 seconds sys
+5120
+`lu` took 21069ms
+matrix size: 5120
+block size: 256
+
+ Performance counter stats for './bin/lublk.out':
+
+          21717,34 msec task-clock                #    1,000 CPUs utilized          
+               228      context-switches          #   10,499 /sec                   
+                 4      cpu-migrations            #    0,184 /sec                   
+             51325      page-faults               #    2,363 K/sec                  
+       56955351194      cycles                    #    2,623 GHz                      (49,98%)
+      181061547109      instructions              #    3,18  insn per cycle           (62,50%)
+       22697831930      branches                  #    1,045 G/sec                    (62,52%)
+         196835524      branch-misses             #    0,87% of all branches          (62,53%)
+       44554073712      L1-dcache-loads           #    2,052 G/sec                    (62,51%)
+        5884085889      L1-dcache-load-misses     #   13,21% of all L1-dcache accesses  (62,50%)
+        1012013340      LLC-loads                 #   46,599 M/sec                    (49,97%)
+          13881044      LLC-load-misses           #    1,37% of all LL-cache accesses  (49,99%)
+
+      21,727215215 seconds time elapsed
+
+      21,598840000 seconds user
+       0,120060000 seconds sys
+
+6144
+`lu` took 36477ms
+matrix size: 6144
+block size: 256
+
+ Performance counter stats for './bin/lublk.out':
+
+          37375,22 msec task-clock                #    1,000 CPUs utilized          
+               207      context-switches          #    5,538 /sec                   
+                 5      cpu-migrations            #    0,134 /sec                   
+             73854      page-faults               #    1,976 K/sec                  
+       96847048723      cycles                    #    2,591 GHz                      (50,00%)
+      313088625000      instructions              #    3,23  insn per cycle           (62,50%)
+       39267402615      branches                  #    1,051 G/sec                    (62,50%)
+         333792806      branch-misses             #    0,85% of all branches          (62,50%)
+       77257623481      L1-dcache-loads           #    2,067 G/sec                    (62,51%)
+       10231457555      L1-dcache-load-misses     #   13,24% of all L1-dcache accesses  (62,50%)
+        1794213986      LLC-loads                 #   48,005 M/sec                    (50,00%)
+          14023799      LLC-load-misses           #    0,78% of all LL-cache accesses  (49,99%)
+
+      37,379875045 seconds time elapsed
+
+      37,208602000 seconds user
+       0,167984000 seconds sys
+
+7168
+`lu` took 57542ms
+matrix size: 7168
+block size: 256
+
+ Performance counter stats for './bin/lublk.out':
+
+          58782,50 msec task-clock                #    1,000 CPUs utilized          
+               226      context-switches          #    3,845 /sec                   
+                 7      cpu-migrations            #    0,119 /sec                   
+            100479      page-faults               #    1,709 K/sec                  
+      154081926932      cycles                    #    2,621 GHz                      (50,00%)
+      498426158023      instructions              #    3,23  insn per cycle           (62,50%)
+       62533346013      branches                  #    1,064 G/sec                    (62,50%)
+         522750293      branch-misses             #    0,84% of all branches          (62,50%)
+      123062839551      L1-dcache-loads           #    2,094 G/sec                    (62,50%)
+       16275562183      L1-dcache-load-misses     #   13,23% of all L1-dcache accesses  (62,50%)
+        2825902473      LLC-loads                 #   48,074 M/sec                    (50,00%)
+          42954673      LLC-load-misses           #    1,52% of all LL-cache accesses  (50,00%)
+
+      58,788188988 seconds time elapsed
+
+      58,571898000 seconds user
+       0,211985000 seconds sys
+8192
+`lu` took 84331ms
+matrix size: 8192
+block size: 256
+
+ Performance counter stats for './bin/lublk.out':
+
+          85243,83 msec task-clock                #    0,999 CPUs utilized          
+              2623      context-switches          #   30,771 /sec                   
+                18      cpu-migrations            #    0,211 /sec                   
+            131199      page-faults               #    1,539 K/sec                  
+      227963933817      cycles                    #    2,674 GHz                      (49,99%)
+      745082609325      instructions              #    3,27  insn per cycle           (62,49%)
+       93453336878      branches                  #    1,096 G/sec                    (62,50%)
+         772476034      branch-misses             #    0,83% of all branches          (62,48%)
+      183958421398      L1-dcache-loads           #    2,158 G/sec                    (62,50%)
+       24391407663      L1-dcache-load-misses     #   13,26% of all L1-dcache accesses  (62,51%)
+        4148599060      LLC-loads                 #   48,667 M/sec                    (50,02%)
+          44290998      LLC-load-misses           #    1,07% of all LL-cache accesses  (50,00%)
+
+      85,343844128 seconds time elapsed
+
+      84,913817000 seconds user
+       0,336070000 seconds sys

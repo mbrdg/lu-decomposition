@@ -1,0 +1,201 @@
+1024
+`lu` took 77ms
+matrix size: 1024
+block size: 256
+
+ Performance counter stats for './bin/luomp.out':
+
+            881,90 msec task-clock                #    6,427 CPUs utilized          
+               241      context-switches          #  273,275 /sec                   
+                 6      cpu-migrations            #    6,804 /sec                   
+              2236      page-faults               #    2,535 K/sec                  
+        2767254110      cycles                    #    3,138 GHz                      (54,73%)
+        1520967587      instructions              #    0,55  insn per cycle           (67,52%)
+         199110714      branches                  #  225,776 M/sec                    (63,89%)
+           2682262      branch-misses             #    1,35% of all branches          (59,94%)
+         608370882      L1-dcache-loads           #  689,844 M/sec                    (60,75%)
+          60847983      L1-dcache-load-misses     #   10,00% of all L1-dcache accesses  (61,51%)
+           6802056      LLC-loads                 #    7,713 M/sec                    (50,90%)
+             36173      LLC-load-misses           #    0,53% of all LL-cache accesses  (55,32%)
+
+       0,137207579 seconds time elapsed
+
+       0,863731000 seconds user
+       0,020086000 seconds sys
+
+2048
+
+`lu` took 277ms
+matrix size: 2048
+block size: 256
+
+ Performance counter stats for './bin/luomp.out':
+
+           3334,00 msec task-clock                #    8,162 CPUs utilized          
+               250      context-switches          #   74,985 /sec                   
+                 1      cpu-migrations            #    0,300 /sec                   
+              8391      page-faults               #    2,517 K/sec                  
+       11531002964      cycles                    #    3,459 GHz                      (49,30%)
+       11997699344      instructions              #    1,04  insn per cycle           (62,36%)
+        1485759336      branches                  #  445,639 M/sec                    (62,96%)
+          14983679      branch-misses             #    1,01% of all branches          (63,70%)
+        4380559264      L1-dcache-loads           #    1,314 G/sec                    (64,04%)
+         434501422      L1-dcache-load-misses     #    9,92% of all L1-dcache accesses  (63,11%)
+          56503782      LLC-loads                 #   16,948 M/sec                    (49,30%)
+            870862      LLC-load-misses           #    1,54% of all LL-cache accesses  (49,04%)
+
+       0,408499771 seconds time elapsed
+
+       3,296337000 seconds user
+       0,039810000 seconds sys
+
+3072
+`lu` took 825ms
+matrix size: 3072
+block size: 256
+
+ Performance counter stats for './bin/luomp.out':
+
+           9745,16 msec task-clock                #    9,253 CPUs utilized          
+              1772      context-switches          #  181,834 /sec                   
+                 2      cpu-migrations            #    0,205 /sec                   
+             18685      page-faults               #    1,917 K/sec                  
+       33185401965      cycles                    #    3,405 GHz                      (49,83%)
+       40330876677      instructions              #    1,22  insn per cycle           (62,50%)
+        4864805001      branches                  #  499,202 M/sec                    (62,75%)
+          45318742      branch-misses             #    0,93% of all branches          (63,04%)
+       14306724505      L1-dcache-loads           #    1,468 G/sec                    (63,01%)
+        1461682144      L1-dcache-load-misses     #   10,22% of all L1-dcache accesses  (62,70%)
+         224183190      LLC-loads                 #   23,005 M/sec                    (49,57%)
+           5069574      LLC-load-misses           #    2,26% of all LL-cache accesses  (49,69%)
+
+       1,053181746 seconds time elapsed
+
+       9,688710000 seconds user
+       0,059391000 seconds sys
+
+4096
+`lu` took 2006ms
+matrix size: 4096
+block size: 256
+
+ Performance counter stats for './bin/luomp.out':
+
+          22606,23 msec task-clock                #    9,339 CPUs utilized          
+              8772      context-switches          #  388,035 /sec                   
+                 9      cpu-migrations            #    0,398 /sec                   
+             33122      page-faults               #    1,465 K/sec                  
+       75520611371      cycles                    #    3,341 GHz                      (50,42%)
+       95512616185      instructions              #    1,26  insn per cycle           (62,70%)
+       11697011542      branches                  #  517,424 M/sec                    (62,67%)
+         105274476      branch-misses             #    0,90% of all branches          (62,71%)
+       33925308350      L1-dcache-loads           #    1,501 G/sec                    (62,38%)
+        3441176734      L1-dcache-load-misses     #   10,14% of all L1-dcache accesses  (62,12%)
+         518982583      LLC-loads                 #   22,958 M/sec                    (49,72%)
+          14698583      LLC-load-misses           #    2,83% of all LL-cache accesses  (50,18%)
+
+       2,420668346 seconds time elapsed
+
+      22,424536000 seconds user
+       0,195744000 seconds sys
+
+
+5120
+`lu` took 3538ms
+matrix size: 5120
+block size: 256
+
+ Performance counter stats for './bin/luomp.out':
+
+          42807,62 msec task-clock                #   10,295 CPUs utilized          
+              1934      context-switches          #   45,179 /sec                   
+                 8      cpu-migrations            #    0,187 /sec                   
+             51724      page-faults               #    1,208 K/sec                  
+      145579648217      cycles                    #    3,401 GHz                      (50,05%)
+      185800348897      instructions              #    1,28  insn per cycle           (62,61%)
+       22748516788      branches                  #  531,413 M/sec                    (62,63%)
+         197491292      branch-misses             #    0,87% of all branches          (62,62%)
+       66330763118      L1-dcache-loads           #    1,550 G/sec                    (62,52%)
+        6927953390      L1-dcache-load-misses     #   10,44% of all L1-dcache accesses  (62,47%)
+        1107767611      LLC-loads                 #   25,878 M/sec                    (49,88%)
+          20407239      LLC-load-misses           #    1,84% of all LL-cache accesses  (49,97%)
+
+       4,158185588 seconds time elapsed
+
+      42,646403000 seconds user
+       0,163840000 seconds sys
+
+6144
+`lu` took 6106ms
+matrix size: 6144
+block size: 256
+
+ Performance counter stats for './bin/luomp.out':
+
+          73948,31 msec task-clock                #   10,521 CPUs utilized          
+              2581      context-switches          #   34,903 /sec                   
+                 3      cpu-migrations            #    0,041 /sec                   
+             74499      page-faults               #    1,007 K/sec                  
+      251663797370      cycles                    #    3,403 GHz                      (49,99%)
+      320181922126      instructions              #    1,27  insn per cycle           (62,50%)
+       39359979220      branches                  #  532,263 M/sec                    (62,51%)
+         334730795      branch-misses             #    0,85% of all branches          (62,55%)
+      114943275285      L1-dcache-loads           #    1,554 G/sec                    (62,55%)
+       12132161006      L1-dcache-load-misses     #   10,55% of all L1-dcache accesses  (62,51%)
+        1969426735      LLC-loads                 #   26,632 M/sec                    (49,99%)
+          32722571      LLC-load-misses           #    1,66% of all LL-cache accesses  (49,99%)
+
+       7,028554705 seconds time elapsed
+
+      73,719227000 seconds user
+       0,231796000 seconds sys
+
+7168
+`lu` took 9757ms
+matrix size: 7168
+block size: 256
+
+ Performance counter stats for './bin/luomp.out':
+
+         117544,98 msec task-clock                #   10,743 CPUs utilized          
+              6510      context-switches          #   55,383 /sec                   
+                12      cpu-migrations            #    0,102 /sec                   
+            101465      page-faults               #  863,201 /sec                   
+      399503276526      cycles                    #    3,399 GHz                      (49,98%)
+      507400673046      instructions              #    1,27  insn per cycle           (62,50%)
+       62577753082      branches                  #  532,373 M/sec                    (62,51%)
+         525716424      branch-misses             #    0,84% of all branches          (62,52%)
+      183031435021      L1-dcache-loads           #    1,557 G/sec                    (62,55%)
+       19361142242      L1-dcache-load-misses     #   10,58% of all L1-dcache accesses  (62,52%)
+        3140746794      LLC-loads                 #   26,720 M/sec                    (50,00%)
+          59603284      LLC-load-misses           #    1,90% of all LL-cache accesses  (49,98%)
+
+      10,941192004 seconds time elapsed
+
+     117,271682000 seconds user
+       0,279417000 seconds sys
+
+8192
+`lu` took 14886ms
+matrix size: 8192
+block size: 256
+
+ Performance counter stats for './bin/luomp.out':
+
+         176743,36 msec task-clock                #   10,709 CPUs utilized          
+             22174      context-switches          #  125,459 /sec                   
+                14      cpu-migrations            #    0,079 /sec                   
+            132637      page-faults               #  750,450 /sec                   
+      603197667896      cycles                    #    3,413 GHz                      (50,07%)
+      756628765241      instructions              #    1,25  insn per cycle           (62,55%)
+       93524187799      branches                  #  529,152 M/sec                    (62,42%)
+         777420283      branch-misses             #    0,83% of all branches          (62,41%)
+      273415876653      L1-dcache-loads           #    1,547 G/sec                    (62,43%)
+       28812946715      L1-dcache-load-misses     #   10,54% of all L1-dcache accesses  (62,54%)
+        4520939940      LLC-loads                 #   25,579 M/sec                    (50,08%)
+         110481277      LLC-load-misses           #    2,44% of all LL-cache accesses  (50,08%)
+
+      16,503520021 seconds time elapsed
+
+     176,207121000 seconds user
+       0,561841000 seconds sys
