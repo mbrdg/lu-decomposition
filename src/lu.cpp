@@ -14,7 +14,7 @@ template<typename T>
 using matrix_t = T[];
 using matrix_size_t = std::size_t;
 
-static constexpr matrix_size_t matrix_size = 8192;
+static constexpr matrix_size_t matrix_size = 8;
 
 
 template<typename T>
@@ -67,7 +67,7 @@ int main(void)
     const auto end = std::chrono::steady_clock::now();
 
     // WARN: be careful with what you print
-    // show(matrix.get(), matrix_size);
+    show(matrix.get(), matrix_size);
 
     const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::clog << "`lu` took" << ' ' << duration.count() << "ms" << '\n'
