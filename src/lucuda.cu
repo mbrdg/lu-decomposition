@@ -17,8 +17,8 @@ using matrix_t = T[];
 using matrix_size_t = std::size_t;
 using block_size_t = std::size_t;
 
-static constexpr matrix_size_t matrix_size = 8;
-static constexpr block_size_t block_size = 2;     // 128 seems to be the better value
+static constexpr matrix_size_t matrix_size = 8192;
+static constexpr block_size_t block_size = 512;     // 128 seems to be the better value
 
 template <typename T>
 __global__ void baselu(T *A, const matrix_size_t N,
@@ -46,7 +46,7 @@ __global__ void row_col_solver(T *A, const matrix_size_t N, const int block_size
     if (blockIdx.x * 2 < gridDim.x) { // utrsm
         
         const auto [start_row, end_row] = std::make_pair(i * blockDim.x, (i + 1) * blockDim.x); //matrix we are operating on
-        const auto [start_col, end_col] = std::make_pair((blockIdx.x + 1)* blockDim.x, (blockIdx.x + 2) * blockDim.x); //diagonal matrix i
+        const auto [start_col, end_col] = std::make_pair((blockIdx.x + i + 1)* blockDim.x, (blockIdx.x + i + 2) * blockDim.x); //diagonal matrix i
 
         const auto ii = threadIdx.x + start_row;
         for (auto jj = ii + 1; jj < blockDim.x; ++jj) {
@@ -81,8 +81,8 @@ __global__ void gemm(T *A, int N, const int num_side_blocks, int i) {
 
     const auto block_row = (blockIdx.x / (num_side_blocks-i-1)) + 1+i; //j
     const auto block_col = (blockIdx.x % (num_side_blocks-i-1)) + 1+i; //k
-    if(threadIdx.x == 0)
-        printf("block row: %d\nblock col: %d\n", block_row, block_col);
+    // if(threadIdx.x == 0)
+    //     printf("block row: %d\nblock col: %d\n", block_row*blockDim.x, block_col*blockDim.x);
 
     const auto [si, ei] = std::make_pair(i * blockDim.x, i * blockDim.x + blockDim.x);
     const auto [sj, ej] = std::make_pair(block_row * blockDim.x, block_row * blockDim.x + blockDim.x);
@@ -127,12 +127,10 @@ void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
 
         int gemm_blocks = (blocks - i - 1) * (blocks - i - 1);
 
-        printf("i: %d\ngemm blocks: %d\n", i, gemm_blocks);
-        if (i != 0){
-            gemm<<<gemm_blocks, B>>>(gpu_A, N, blocks, i);  // general matrix multiplication
-            //gemm<<<blocks-1, blocks-1>>>(gpu_A, N, B, i);
-            cudaDeviceSynchronize();
-        }
+        //printf("i: %d\ngemm blocks: %d\n", i, gemm_blocks);
+        gemm<<<gemm_blocks, B>>>(gpu_A, N, blocks, i);  // general matrix multiplication
+        cudaDeviceSynchronize();
+        
         
 
         
@@ -177,7 +175,7 @@ main(void)
     const auto end = std::chrono::steady_clock::now();
 
     // WARN: be careful when calling this!
-    show(matrix.get(), matrix_size);
+    //show(matrix.get(), matrix_size);
 
     const auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::clog << "`lu` took" << ' ' << duration.count() << "ms" << '\n'
