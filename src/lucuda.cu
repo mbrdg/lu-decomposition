@@ -18,27 +18,26 @@ using matrix_size_t = std::size_t;
 using block_size_t = std::size_t;
 
 static constexpr matrix_size_t matrix_size = 8192;
-static constexpr block_size_t block_size = 512;     // 128 seems to be the better value
+static constexpr block_size_t block_size = 128;     // 128 seems to be the better value
 
 template <typename T>
-__global__ void baselu(T *A, const matrix_size_t N,
-            const block_size_t B,
-            const matrix_size_t i){
-    const auto [start, end] = std::make_pair(i * B, i * B + B);
+__global__ void baselu(T *A, const matrix_size_t N, const matrix_size_t i){
+    const auto [start, end] = std::make_pair(i * blockDim.x, (i + 1) * blockDim.x);
 
-    for (auto ii = start; A[ii * N + ii] != 0 && ii < end - 1; ++ii) {    
-        for (auto jj = ii + 1; jj < end; ++jj) {
-            A[jj * N + ii] /= A[ii * N + ii];
+    const auto ii = threadIdx.x + start;
+      
+    for (auto jj = ii + 1; jj < end; ++jj) {
+        A[jj * N + ii] /= A[ii * N + ii];
 
-            for (auto kk = ii + 1; kk < end; ++kk) {
-                A[jj * N + kk] -= A[jj * N + ii] * A[ii * N + kk];
-            }
+        for (auto kk = ii + 1; kk < end; ++kk) {
+            A[jj * N + kk] -= A[jj * N + ii] * A[ii * N + kk];
         }
     }
+    
 }
 
 template <typename T>
-__global__ void row_col_solver(T *A, const matrix_size_t N, const int block_size, const matrix_size_t i) {
+__global__ void row_col_solver(T *A, const matrix_size_t N, const matrix_size_t i) {
 
     if(threadIdx.x > blockDim.x) return;
 
@@ -79,20 +78,23 @@ template <typename T>
 __global__ void gemm(T *A, int N, const int num_side_blocks, int i) {
     if(threadIdx.x > blockDim.x) return;
 
+    __shared__ 
+
     const auto block_row = (blockIdx.x / (num_side_blocks-i-1)) + 1+i; //j
     const auto block_col = (blockIdx.x % (num_side_blocks-i-1)) + 1+i; //k
     // if(threadIdx.x == 0)
     //     printf("block row: %d\nblock col: %d\n", block_row*blockDim.x, block_col*blockDim.x);
 
     const auto [si, ei] = std::make_pair(i * blockDim.x, i * blockDim.x + blockDim.x);
-    const auto [sj, ej] = std::make_pair(block_row * blockDim.x, block_row * blockDim.x + blockDim.x);
-    const auto [sk, ek] = std::make_pair(block_col * blockDim.x, block_col * blockDim.x + blockDim.x);
+    const auto [sj, ej] = std::make_pair(block_row * blockDim.x, (block_row + 1) * blockDim.x + blockDim.x);
+    const auto [sk, ek] = std::make_pair(block_col * blockDim.x, (block_col + 1) * blockDim.x + blockDim.x);
 
     const auto ii = si + threadIdx.x;
 
     for (auto jj = sj; jj < ej; ++jj) {
         for (auto kk = sk; kk < ek; ++kk) {
             A[jj * N + kk] -= A[jj * N + ii] * A[ii * N + kk];
+            
         }
     }
     
@@ -113,26 +115,23 @@ void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
     cudaMalloc((void **) &gpu_A, N * N * sizeof(T));
     cudaMemcpy(gpu_A, A, N * N * sizeof(T), cudaMemcpyHostToDevice);
 
-    dim3 grid_size(blocks);
-    dim3 block_size(B);
+    //size_t shared_mem_size = B * B * sizeof(T);
    
     for (block_size_t i = 0; i < blocks; ++i) { 
-        baselu<<<1, 1>>>(gpu_A, N, B, i);  // LU decomposition on the diagonal block
-        cudaDeviceSynchronize();
+        baselu<<<1, B>>>(gpu_A, N, i);  // LU decomposition on the diagonal block
+        cudaDeviceSynchronize(); //kernel lauches are async, so synchronize to make sure the kernel is done before continuing
 
-        int row_col_blocks = (blocks-1) * 2; 
+        int row_col_blocks = (blocks - i - 1) * 2; 
         
-        row_col_solver<<<row_col_blocks, B>>>(gpu_A, N, B, i);  // solve the rows and columns of the diagonal block
+        row_col_solver<<<row_col_blocks, B>>>(gpu_A, N, i);  // solve the rows and columns of the diagonal block
         cudaDeviceSynchronize();
 
         int gemm_blocks = (blocks - i - 1) * (blocks - i - 1);
 
-        //printf("i: %d\ngemm blocks: %d\n", i, gemm_blocks);
         gemm<<<gemm_blocks, B>>>(gpu_A, N, blocks, i);  // general matrix multiplication
         cudaDeviceSynchronize();
         
-        
-
+    
         
     }
 
@@ -167,7 +166,7 @@ void show(matrix_t<T> A, const matrix_size_t N, std::ostream& out = std::cout) {
 int
 main(void) 
 {
-    auto matrix = std::make_unique<matrix_t<double>>(matrix_size * matrix_size);
+    auto matrix = std::make_unique<matrix_t<float>>(matrix_size * matrix_size);
     make_diagonal_dominant(matrix.get(), matrix_size);
 
     const auto start = std::chrono::steady_clock::now();
