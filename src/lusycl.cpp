@@ -163,7 +163,10 @@ void gemm(sycl::queue& q,
 }
 
 template <typename T>
-void lu(sycl::queue& q, matrix_t<T> A, const matrix_size_t N, const block_size_t B)
+void lu(sycl::queue& q,
+        matrix_t<T> A,
+        const matrix_size_t N,
+        const block_size_t B)
 {
     const matrix_size_t blocks = N / B;
 
@@ -188,7 +191,7 @@ int
 main(void) 
 {
     sycl::device dev(sycl::default_selector_v);
-    sycl::queue q(dev);
+    sycl::queue q(dev, sycl::property::queue::enable_profiling()); 
 
     auto matrix = std::make_unique<matrix_t<double>>(matrix_size * matrix_size);
     make_diagonal_dominant(matrix.get(), matrix_size);
