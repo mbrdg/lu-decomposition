@@ -1,202 +1,203 @@
 1024:
-`lu` took 651
+`lu` took 67ms
 matrix size: 1024
-block size: 128
+block size: 256
 
  Performance counter stats for './bin/lucuda.out':
 
-            765,01 msec task-clock                #    0,990 CPUs utilized          
-               104      context-switches          #  135,946 /sec                   
-                 2      cpu-migrations            #    2,614 /sec                   
-              4865      page-faults               #    6,359 K/sec                  
-        2011457378      cycles                    #    2,629 GHz                      (50,49%)
-        3752459921      instructions              #    1,87  insn per cycle           (62,74%)
-         720826484      branches                  #  942,245 M/sec                    (62,79%)
-           1664386      branch-misses             #    0,23% of all branches          (62,59%)
-        1276250587      L1-dcache-loads           #    1,668 G/sec                    (62,26%)
-           5742535      L1-dcache-load-misses     #    0,45% of all L1-dcache accesses  (62,21%)
-            757707      LLC-loads                 #  990,454 K/sec                    (49,71%)
-            304961      LLC-load-misses           #   40,25% of all LL-cache accesses  (50,80%)
+            107,44 msec task-clock                #    0,953 CPUs utilized          
+               134      context-switches          #    1,247 K/sec                  
+                 1      cpu-migrations            #    9,308 /sec                   
+              3855      page-faults               #   35,882 K/sec                  
+         434380868      cycles                    #    4,043 GHz                      (40,53%)
+         431712135      instructions              #    0,99  insn per cycle           (57,91%)
+          89616127      branches                  #  834,142 M/sec                    (61,72%)
+           2051380      branch-misses             #    2,29% of all branches          (68,15%)
+          99961727      L1-dcache-loads           #  930,438 M/sec                    (77,15%)
+           4572756      L1-dcache-load-misses     #    4,57% of all L1-dcache accesses  (70,48%)
+            881120      LLC-loads                 #    8,201 M/sec                    (45,96%)
+            214762      LLC-load-misses           #   24,37% of all LL-cache accesses  (39,92%)
 
-       0,772392468 seconds time elapsed
+       0,112723488 seconds time elapsed
 
-       0,642593000 seconds user
-       0,123729000 seconds sys
+       0,028067000 seconds user
+       0,080191000 seconds sys
+
 
 2048:
-`lu` took 789
+`lu` took 80ms
 matrix size: 2048
 block size: 128
 
  Performance counter stats for './bin/lucuda.out':
 
-           1172,00 msec task-clock                #    0,987 CPUs utilized          
-               297      context-switches          #  253,414 /sec                   
-                 1      cpu-migrations            #    0,853 /sec                   
-             11006      page-faults               #    9,391 K/sec                  
-        3036020892      cycles                    #    2,590 GHz                      (49,61%)
-        5686451513      instructions              #    1,87  insn per cycle           (62,45%)
-         994961397      branches                  #  848,945 M/sec                    (62,71%)
-           4966313      branch-misses             #    0,50% of all branches          (63,01%)
-        1979685093      L1-dcache-loads           #    1,689 G/sec                    (63,25%)
-           6365680      L1-dcache-load-misses     #    0,32% of all L1-dcache accesses  (62,80%)
-            838808      LLC-loads                 #  715,708 K/sec                    (49,68%)
-            496834      LLC-load-misses           #   59,23% of all LL-cache accesses  (49,60%)
+            166,15 msec task-clock                #    0,972 CPUs utilized          
+                93      context-switches          #  559,745 /sec                   
+                 0      cpu-migrations            #    0,000 /sec                   
+              6922      page-faults               #   41,662 K/sec                  
+         651113037      cycles                    #    3,919 GHz                      (49,80%)
+         784157364      instructions              #    1,20  insn per cycle           (64,60%)
+         128780005      branches                  #  775,096 M/sec                    (64,36%)
+           4368100      branch-misses             #    3,39% of all branches          (64,67%)
+         144354161      L1-dcache-loads           #  868,833 M/sec                    (64,66%)
+           6645752      L1-dcache-load-misses     #    4,60% of all L1-dcache accesses  (63,03%)
+            338468      LLC-loads                 #    2,037 M/sec                    (48,19%)
+            166291      LLC-load-misses           #   49,13% of all LL-cache accesses  (49,20%)
 
-       1,186952012 seconds time elapsed
+       0,170990040 seconds time elapsed
 
-       1,037861000 seconds user
-       0,135720000 seconds sys
+       0,065189000 seconds user
+       0,101858000 seconds sys
 
 
 3072:
 
-`lu` took 920
+`lu` took 84ms
 matrix size: 3072
 block size: 128
 
  Performance counter stats for './bin/lucuda.out':
 
-           1770,79 msec task-clock                #    0,995 CPUs utilized          
-               120      context-switches          #   67,766 /sec                   
-                 1      cpu-migrations            #    0,565 /sec                   
-             21248      page-faults               #   11,999 K/sec                  
-        4530402478      cycles                    #    2,558 GHz                      (50,16%)
-        8298307479      instructions              #    1,83  insn per cycle           (62,61%)
-        1358096879      branches                  #  766,945 M/sec                    (62,61%)
-          10123005      branch-misses             #    0,75% of all branches          (62,99%)
-        2951877593      L1-dcache-loads           #    1,667 G/sec                    (62,83%)
-           7484493      L1-dcache-load-misses     #    0,25% of all L1-dcache accesses  (62,26%)
-            751837      LLC-loads                 #  424,577 K/sec                    (49,64%)
-            229472      LLC-load-misses           #   30,52% of all LL-cache accesses  (49,70%)
+            249,52 msec task-clock                #    0,984 CPUs utilized          
+                93      context-switches          #  372,720 /sec                   
+                 1      cpu-migrations            #    4,008 /sec                   
+             12045      page-faults               #   48,273 K/sec                  
+         965188649      cycles                    #    3,868 GHz                      (49,69%)
+        1344124211      instructions              #    1,39  insn per cycle           (61,90%)
+         208049893      branches                  #  833,810 M/sec                    (63,62%)
+          10068199      branch-misses             #    4,84% of all branches          (63,41%)
+         197080846      L1-dcache-loads           #  789,849 M/sec                    (64,81%)
+           9450144      L1-dcache-load-misses     #    4,80% of all L1-dcache accesses  (64,96%)
+           2040616      LLC-loads                 #    8,178 M/sec                    (48,03%)
+            997888      LLC-load-misses           #   48,90% of all LL-cache accesses  (47,80%)
 
-       1,779894649 seconds time elapsed
+       0,253493580 seconds time elapsed
 
-       1,577223000 seconds user
-       0,195655000 seconds sys
+       0,147087000 seconds user
+       0,103358000 seconds sys
 
 4096:
-`lu` took 1065
+`lu` took 82
 matrix size: 4096
 block size: 128
 
  Performance counter stats for './bin/lucuda.out':
 
-           2494,96 msec task-clock                #    0,997 CPUs utilized          
-               153      context-switches          #   61,324 /sec                   
-                 3      cpu-migrations            #    1,202 /sec                   
-             35581      page-faults               #   14,261 K/sec                  
-        6496176704      cycles                    #    2,604 GHz                      (49,90%)
-       11969440516      instructions              #    1,84  insn per cycle           (62,38%)
-        1857427403      branches                  #  744,471 M/sec                    (62,44%)
-          18102716      branch-misses             #    0,97% of all branches          (62,53%)
-        4274886195      L1-dcache-loads           #    1,713 G/sec                    (62,70%)
-          12464702      L1-dcache-load-misses     #    0,29% of all L1-dcache accesses  (62,57%)
-           2284439      LLC-loads                 #  915,621 K/sec                    (49,95%)
-            603128      LLC-load-misses           #   26,40% of all LL-cache accesses  (50,03%)
+            344,47 msec task-clock                #    0,988 CPUs utilized          
+                89      context-switches          #  258,366 /sec                   
+                 0      cpu-migrations            #    0,000 /sec                   
+             19215      page-faults               #   55,781 K/sec                  
+        1417571141      cycles                    #    4,115 GHz                      (49,54%)
+        2007123325      instructions              #    1,42  insn per cycle           (63,85%)
+         282667907      branches                  #  820,581 M/sec                    (63,16%)
+          18446287      branch-misses             #    6,53% of all branches          (63,40%)
+         265435714      L1-dcache-loads           #  770,556 M/sec                    (63,04%)
+           9865382      L1-dcache-load-misses     #    3,72% of all L1-dcache accesses  (62,95%)
+           3138395      LLC-loads                 #    9,111 M/sec                    (50,34%)
+           1406303      LLC-load-misses           #   44,81% of all LL-cache accesses  (48,53%)
 
-       2,503713119 seconds time elapsed
+       0,348540157 seconds time elapsed
 
-       2,312270000 seconds user
-       0,184021000 seconds sys
+       0,242160000 seconds user
+       0,103215000 seconds sys
 
 
 5120:
-`lu` took 1604
+`lu` took 97ms
 matrix size: 5120
 block size: 128
 
  Performance counter stats for './bin/lucuda.out':
 
-           3822,38 msec task-clock                #    0,998 CPUs utilized          
-               178      context-switches          #   46,568 /sec                   
-                 0      cpu-migrations            #    0,000 /sec                   
-             54017      page-faults               #   14,132 K/sec                  
-        9917464115      cycles                    #    2,595 GHz                      (50,06%)
-       18503974266      instructions              #    1,87  insn per cycle           (62,57%)
-        2850447098      branches                  #  745,726 M/sec                    (62,58%)
-          27172808      branch-misses             #    0,95% of all branches          (62,61%)
-        6692956432      L1-dcache-loads           #    1,751 G/sec                    (62,57%)
-          16095810      L1-dcache-load-misses     #    0,24% of all L1-dcache accesses  (62,57%)
-           1832026      LLC-loads                 #  479,290 K/sec                    (49,88%)
-            887475      LLC-load-misses           #   48,44% of all LL-cache accesses  (49,99%)
+            499,58 msec task-clock                #    0,992 CPUs utilized          
+               101      context-switches          #  202,168 /sec                   
+                 1      cpu-migrations            #    2,002 /sec                   
+             28427      page-faults               #   56,901 K/sec                  
+        2055206813      cycles                    #    4,114 GHz                      (49,30%)
+        2864341918      instructions              #    1,39  insn per cycle           (62,04%)
+         361377915      branches                  #  723,357 M/sec                    (61,67%)
+          26851616      branch-misses             #    7,43% of all branches          (63,86%)
+         360947970      L1-dcache-loads           #  722,496 M/sec                    (63,79%)
+          11784119      L1-dcache-load-misses     #    3,26% of all L1-dcache accesses  (63,88%)
+           2167891      LLC-loads                 #    4,339 M/sec                    (49,88%)
+           1288152      LLC-load-misses           #   59,42% of all LL-cache accesses  (49,12%)
 
-       3,830938451 seconds time elapsed
+       0,503787341 seconds time elapsed
 
-       3,592920000 seconds user
-       0,227804000 seconds sys
+       0,368280000 seconds user
+       0,130680000 seconds sys
 
 6144:
-`lu` took 2111
+`lu` took 98ms
 matrix size: 6144
 block size: 128
 
  Performance counter stats for './bin/lucuda.out':
 
-           4047,46 msec task-clock                #    0,998 CPUs utilized          
-               165      context-switches          #   40,766 /sec                   
-                 2      cpu-migrations            #    0,494 /sec                   
-             76540      page-faults               #   18,911 K/sec                  
-       17670522534      cycles                    #    4,366 GHz                      (50,09%)
-       33482650815      instructions              #    1,89  insn per cycle           (62,56%)
-        5437902661      branches                  #    1,344 G/sec                    (62,49%)
-          39009020      branch-misses             #    0,72% of all branches          (62,50%)
-       12015693512      L1-dcache-loads           #    2,969 G/sec                    (62,47%)
-          21695755      L1-dcache-load-misses     #    0,18% of all L1-dcache accesses  (62,46%)
-           4415157      LLC-loads                 #    1,091 M/sec                    (49,99%)
-           1948416      LLC-load-misses           #   44,13% of all LL-cache accesses  (50,12%)
+            656,96 msec task-clock                #    0,993 CPUs utilized          
+                96      context-switches          #  146,128 /sec                   
+                 2      cpu-migrations            #    3,044 /sec                   
+             39693      page-faults               #   60,419 K/sec                  
+        2709524422      cycles                    #    4,124 GHz                      (49,46%)
+        4081982024      instructions              #    1,51  insn per cycle           (62,13%)
+         502141760      branches                  #  764,341 M/sec                    (62,76%)
+          39800979      branch-misses             #    7,93% of all branches          (62,72%)
+         469860946      L1-dcache-loads           #  715,204 M/sec                    (63,69%)
+          14265861      L1-dcache-load-misses     #    3,04% of all L1-dcache accesses  (62,83%)
+           3809591      LLC-loads                 #    5,799 M/sec                    (49,80%)
+           2184841      LLC-load-misses           #   57,35% of all LL-cache accesses  (49,46%)
 
-       4,054265012 seconds time elapsed
+       0,661733504 seconds time elapsed
 
-       3,868421000 seconds user
-       0,180019000 seconds sys
+       0,522351000 seconds user
+       0,135572000 seconds sys
 
 7168:
-`lu` took 3061
+`lu` took 111ms
 matrix size: 7168
 block size: 128
 
  Performance counter stats for './bin/lucuda.out':
 
-           7388,28 msec task-clock                #    0,999 CPUs utilized          
-               148      context-switches          #   20,032 /sec                   
-                 3      cpu-migrations            #    0,406 /sec                   
-            103165      page-faults               #   13,963 K/sec                  
-       19170006080      cycles                    #    2,595 GHz                      (50,00%)
-       35209194341      instructions              #    1,84  insn per cycle           (62,49%)
-        5367316635      branches                  #  726,464 M/sec                    (62,48%)
-          53031140      branch-misses             #    0,99% of all branches          (62,45%)
-       12739049451      L1-dcache-loads           #    1,724 G/sec                    (62,55%)
-          27227296      L1-dcache-load-misses     #    0,21% of all L1-dcache accesses  (62,56%)
-           5851979      LLC-loads                 #  792,063 K/sec                    (50,07%)
-           2548094      LLC-load-misses           #   43,54% of all LL-cache accesses  (50,02%)
+            850,40 msec task-clock                #    0,995 CPUs utilized          
+                99      context-switches          #  116,415 /sec                   
+                 2      cpu-migrations            #    2,352 /sec                   
+             53004      page-faults               #   62,328 K/sec                  
+        3528897521      cycles                    #    4,150 GHz                      (49,48%)
+        5468239239      instructions              #    1,55  insn per cycle           (61,67%)
+         644713630      branches                  #  758,126 M/sec                    (61,91%)
+          53141388      branch-misses             #    8,24% of all branches          (62,37%)
+         587726238      L1-dcache-loads           #  691,114 M/sec                    (63,34%)
+          19387465      L1-dcache-load-misses     #    3,30% of all L1-dcache accesses  (62,86%)
+           4003361      LLC-loads                 #    4,708 M/sec                    (50,72%)
+           2388815      LLC-load-misses           #   59,67% of all LL-cache accesses  (49,91%)
 
-       7,395237218 seconds time elapsed
+       0,854982316 seconds time elapsed
 
-       7,090404000 seconds user
-       0,295599000 seconds sys
+       0,702082000 seconds user
+       0,149293000 seconds sys
 
 8192:
-`lu` took 4414
+`lu` took 136ms
 matrix size: 8192
 block size: 128
 
  Performance counter stats for './bin/lucuda.out':
 
-          10123,78 msec task-clock                #    0,999 CPUs utilized          
-               174      context-switches          #   17,187 /sec                   
-                 2      cpu-migrations            #    0,198 /sec                   
-            133887      page-faults               #   13,225 K/sec                  
-       26181989357      cycles                    #    2,586 GHz                      (49,95%)
-       48383131943      instructions              #    1,85  insn per cycle           (62,45%)
-        7471497120      branches                  #  738,014 M/sec                    (62,47%)
-          69470724      branch-misses             #    0,93% of all branches          (62,50%)
-       17508942432      L1-dcache-loads           #    1,729 G/sec                    (62,58%)
-          33807407      L1-dcache-load-misses     #    0,19% of all L1-dcache accesses  (62,53%)
-           5716722      LLC-loads                 #  564,682 K/sec                    (50,03%)
-           2665929      LLC-load-misses           #   46,63% of all LL-cache accesses  (50,03%)
+           1087,53 msec task-clock                #    0,996 CPUs utilized          
+                90      context-switches          #   82,756 /sec                   
+                 0      cpu-migrations            #    0,000 /sec                   
+             68363      page-faults               #   62,861 K/sec                  
+        4529414849      cycles                    #    4,165 GHz                      (49,84%)
+        6879909445      instructions              #    1,52  insn per cycle           (62,97%)
+         812606196      branches                  #  747,205 M/sec                    (63,15%)
+          69490348      branch-misses             #    8,55% of all branches          (62,95%)
+         744855796      L1-dcache-loads           #  684,907 M/sec                    (62,66%)
+          22430931      L1-dcache-load-misses     #    3,01% of all L1-dcache accesses  (62,26%)
+           5411920      LLC-loads                 #    4,976 M/sec                    (50,05%)
+           3157817      LLC-load-misses           #   58,35% of all LL-cache accesses  (49,72%)
 
-      10,130394058 seconds time elapsed
+       1,091369236 seconds time elapsed
 
-       9,717775000 seconds user
-       0,408074000 seconds sys
+       0,884397000 seconds user
+       0,204091000 seconds sys

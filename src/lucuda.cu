@@ -18,14 +18,13 @@ using matrix_size_t = std::size_t;
 using block_size_t = std::size_t;
 
 static constexpr matrix_size_t matrix_size = 8192;
-static constexpr block_size_t block_size = 128;     // 128 seems to be the better value
+static constexpr block_size_t block_size = 512;     // 128 seems to be the better value
 
 template <typename T>
 __global__ void baselu(T *A, const matrix_size_t N, const matrix_size_t i){
     const auto [start, end] = std::make_pair(i * blockDim.x, (i + 1) * blockDim.x);
 
     extern __shared__ T sA[];
-    //copy block to the shared memory
 
     // Copy block to the shared memory
     const auto ii = threadIdx.x + start;
@@ -152,10 +151,7 @@ void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
         gemm<<<gemm_blocks, B, shared_mem_size>>>(gpu_A, N, blocks, i);  // general matrix multiplication
         cudaDeviceSynchronize();
         
-    
-        
     }
-
 
     cudaMemcpy(A, gpu_A, N * N * sizeof(T), cudaMemcpyDeviceToHost);
     cudaFree(gpu_A);
