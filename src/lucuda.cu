@@ -139,7 +139,7 @@ void lu(matrix_t<T> A, const matrix_size_t N, const block_size_t B)
    
     for (block_size_t i = 0; i < blocks; ++i) { 
         baselu<<<1, B, shared_mem_size>>>(gpu_A, N, i);  // LU decomposition on the diagonal block
-        cudaDeviceSynchronize(); //kernel lauches are async, so synchronize to make sure the kernel is done before continuing
+        cudaDeviceSynchronize(); //kernel launches are async, so synchronize to make sure the kernel is done before continuing
 
         int row_col_blocks = (blocks - i - 1) * 2; 
         
