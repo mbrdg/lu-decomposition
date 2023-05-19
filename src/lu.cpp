@@ -14,7 +14,7 @@ template<typename T>
 using matrix_t = T[];
 using matrix_size_t = std::size_t;
 
-static constexpr matrix_size_t matrix_size = 16;
+static constexpr matrix_size_t matrix_size = 8192;
 
 
 template<typename T>
