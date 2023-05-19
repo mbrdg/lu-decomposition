@@ -46,7 +46,7 @@ make [all | lu | lublk | luomp | lucuda | lusycl]   # Builds a target
 ./bin/lublk.out   # Block-based serial LU decomposition
 ./bin/luomp.out   # Block-based parallel LU decomposition using OpenMP
 ./bin/lucuda.out  # Block-based parallel LU decomposition using CUDA
-./bin/lusycl.out  # Block-based parallel LU decomposition usin SYCL
+./bin/lusycl.out  # Block-based parallel LU decomposition using SYCL
 make clean        # Removes all the produced executables
 ```
 
